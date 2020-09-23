@@ -18,8 +18,9 @@ stageOneScene = stageOneScene.StageOneScene() #스테이지 1 생성
 scene = titleScene #처음 화면을 타이틀 화면으로 고정
 scene.nextScene(stageOneScene) #타이틀화면 다음은 스테이지 1 화면으로 고정
 
-player = player.Player()
+player = player.Player(100,400)
 player.setImg("images/player.png")
+allSprites=pygame.sprite.Group()
 
 play = False
 while run:
@@ -36,6 +37,7 @@ while run:
             play = True
 
     scene.render(screen)
+    scene.update()
 
     if play:
         player.render(screen)

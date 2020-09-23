@@ -1,13 +1,18 @@
-from source.object.object import Object
+# from source.object.object import Object
 import pygame
+class Player(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        self.x=x
+        self.y=y
+        pygame.sprite.Sprite.__init__(self)
 
-class Player(Object): #Object class 상속
+    def setImg(self,img):
+        self.img = pygame.image.load(img)
 
-    def __init__(self):
-        Object.__init__(self)
-
-        self.x=100
-        self.y=400
+    def render(self, screen):
+        screen.blit(self.img, (self.x, self.y))
+        self.rect = self.img.get_rect()
+        self.rect.center = (self.x,self.y)
 
     def update(self, key):
         if key[pygame.K_LEFT]:

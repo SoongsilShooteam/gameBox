@@ -16,10 +16,10 @@ class TitleScene(SceneManager):
 
         menu = [None, None, None]
         for i in range(0, 3):
-            menu[i] = (Object())
+            menu[i] = (Object(0,0))
             menu[i].setImg("images/menu.png")
-            menu[i].render(screen,
-                           0.5 * screen.get_width() - 0.5 * menu[i].getWidth(),
-                           0.5 * screen.get_height() - 0.5 * menu[i].getHeight() + i * 100)
+            menu[i].x=0.5 * screen.get_width() - 0.5 * menu[i].getWidth()
+            menu[i].y=0.5 * screen.get_height() + i * 100
+            menu[i].render(screen)
         menu[i]
         #print("TitleScene")
