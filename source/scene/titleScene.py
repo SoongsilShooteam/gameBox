@@ -1,5 +1,9 @@
 from source.scene.sceneManager import *
 from source.object.object import Object
+import os
+
+os.chdir(os.getcwd())
+print(os.getcwd())
 
 
 class TitleScene(SceneManager):
@@ -12,7 +16,7 @@ class TitleScene(SceneManager):
             self.menu[i].setImg("images/menu.png")
             self.menu[i].x = 0.5 * screen.get_width()
             self.menu[i].y = 0.5 * screen.get_height() + i * 100
-            print(self.menu[i].getHeight())
+
     def process(self, events):
         pass
         # print("process")

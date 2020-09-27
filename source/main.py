@@ -14,16 +14,15 @@ run = True
 clock = pygame.time.Clock()
 
 # 프로세스의 현재 경로를 루트로 변경함.
-os.chdir("../")
+#os.chdir("../")
 
-titleScene=titleScene.TitleScene(screen) #타이틀 화면 생성
+titleScene = titleScene.TitleScene(screen) #타이틀 화면 생성
 stageOneScene = stageOneScene.StageOneScene() #스테이지 1 생성
 scene = titleScene #처음 화면을 타이틀 화면으로 고정
 scene.nextScene(stageOneScene) #타이틀화면 다음은 스테이지 1 화면으로 고정
 
 #player = player.Player(100,400)
 player = player.Player(screen)
-player.setImg("images/player.png")
 allSprites=pygame.sprite.Group()
 
 play = False

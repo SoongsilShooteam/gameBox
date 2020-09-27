@@ -1,5 +1,9 @@
 from source.object.object import Object
 import pygame
+import os
+
+os.chdir(os.getcwd())
+print(os.getcwd())
 
 
 class Player(Object):
@@ -8,10 +12,7 @@ class Player(Object):
 
         self.x = screen.get_width() / 2
         self.y = screen.get_height() / 2 + 200
-
-
-    def setImg(self, img):
-        self.img = pygame.image.load(img)
+        self.setImg("images/player.png")
 
     def update(self):
         key = pygame.key.get_pressed()
