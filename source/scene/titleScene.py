@@ -1,25 +1,30 @@
 from source.scene.sceneManager import *
 from source.object.object import Object
 
+
 class TitleScene(SceneManager):
-    def __init__(self):
+    def __init__(self, screen):
         SceneManager.__init__(self)
 
+        self.menu = [None, None, None]
+        for i in range(0, 3):
+            self.menu[i] = (Object(0, 0))
+            self.menu[i].setImg("images/menu.png")
+            self.menu[i].x = 0.5 * screen.get_width()
+            self.menu[i].y = 0.5 * screen.get_height() + i * 100
+            print(self.menu[i].getHeight())
     def process(self, events):
-        print("process")
+        pass
+        # print("process")
 
     def update(self):
-        print("update")
+        pass
+        # print("update")
 
     def render(self, screen):
         screen.fill((255, 255, 255))
 
-        menu = [None, None, None]
-        for i in range(0, 3):
-            menu[i] = (Object(0,0))
-            menu[i].setImg("images/menu.png")
-            menu[i].x=0.5 * screen.get_width() - 0.5 * menu[i].getWidth()
-            menu[i].y=0.5 * screen.get_height() + i * 100
-            menu[i].render(screen)
-        menu[i]
-        #print("TitleScene")
+        for i in range(3):
+            self.menu[i].render(screen)
+        # menu[i]
+        # print("TitleScene")

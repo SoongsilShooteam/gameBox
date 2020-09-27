@@ -3,13 +3,16 @@ class SceneManager:
         self.next = self
 
     def process(self, events):
-        print("process")
+        pass
+        #print("process")
 
     def update(self):
-        print("update")
+        pass
+        #print("update")
 
     def render(self, screen):
-        print("render")
+        pass
+        #print("render")
 
     def nextScene(self, scene):
         self.next = scene

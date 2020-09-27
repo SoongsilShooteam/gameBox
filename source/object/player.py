@@ -1,29 +1,30 @@
-# from source.object.object import Object
+from source.object.object import Object
 import pygame
-class Player(pygame.sprite.Sprite):
-    def __init__(self,x,y):
-        self.x=x
-        self.y=y
+
+
+class Player(Object):
+    def __init__(self, screen):
         pygame.sprite.Sprite.__init__(self)
 
-    def setImg(self,img):
+        self.x = screen.get_width() / 2
+        self.y = screen.get_height() / 2 + 200
+
+
+    def setImg(self, img):
         self.img = pygame.image.load(img)
 
-    def render(self, screen):
-        screen.blit(self.img, (self.x, self.y))
-        self.rect = self.img.get_rect()
-        self.rect.center = (self.x,self.y)
+    def update(self):
+        key = pygame.key.get_pressed()
 
-    def update(self, key):
         if key[pygame.K_LEFT]:
-            self.x-=3
-            print(self.x)
+            self.x -= 3
+            #print(self.x)
         elif key[pygame.K_RIGHT]:
-            self.x+=3
-            print(self.x)
+            self.x += 3
+            #print(self.x)
         elif key[pygame.K_UP]:
-            self.y-=3
-            print(self.y)
+            self.y -= 3
+            #print(self.y)
         elif key[pygame.K_DOWN]:
-            self.y+=3
-            print(self.y)
+            self.y += 3
+            #print(self.y)
