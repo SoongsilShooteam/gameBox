@@ -29,4 +29,3 @@ class TitleScene(SceneManager):
 
         for i in range(3):
             self.menu[i].render(screen)
-
