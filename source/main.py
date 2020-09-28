@@ -7,11 +7,10 @@ pygame.init()
 
 size = [1024, 768]
 screen = pygame.display.set_mode(size)
-
-pygame.display.set_caption("TEST")
-
-run = True
 clock = pygame.time.Clock()
+pygame.display.set_caption("TEST")
+isRun = True
+isPlay = False
 
 # 프로세스의 현재 경로를 루트로 변경함.
 #os.chdir("../")
@@ -26,25 +25,25 @@ player = player.Player(screen) #플레이어 객체 생성
 allSprites = pygame.sprite.Group() #allSprites 객체 생성
 allSprites.add(player) #allSprites 객체에 player 추가
 
-play = False
 
-while run:
+while isRun:
     clock.tick(60)
 
-    mouse=pygame.mouse.get_pos()
+    mouse = pygame.mouse.get_pos()
     key = pygame.key.get_pressed()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            run = False
+            isRun = False
         elif event.type == pygame.MOUSEBUTTONDOWN: # 메뉴 클릭 이벤트 추가 예정
-            scene = scene.next
-            play = True
+            if not isPlay :
+                scene = scene.next
+                isPlay = True
 
     scene.update()
     scene.render(screen)
 
-    if play:
+    if isPlay:
         allSprites.update() #allSprites의 등록된 모든 객체를 업데이트
         allSprites.draw(screen) #allSprites의 등록된 모든 객체를 화면에 그림.
 
