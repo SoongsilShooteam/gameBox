@@ -22,9 +22,9 @@ scene = titleScene #처음 화면을 타이틀 화면으로 고정
 scene.nextScene(stageOneScene) #타이틀화면 다음은 스테이지 1 화면으로 고정
 
 #player = player.Player(100,400)
-player = player.Player(screen)
-allSprites=pygame.sprite.Group()
-allSprites.add(player)
+player = player.Player(screen) #플레이어 객체 생성
+allSprites = pygame.sprite.Group() #allSprites 객체 생성
+allSprites.add(player) #allSprites 객체에 player 추가
 
 play = False
 
@@ -37,7 +37,7 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        elif event.type == pygame.MOUSEBUTTONDOWN:
+        elif event.type == pygame.MOUSEBUTTONDOWN: # 메뉴 클릭 이벤트 추가 예정
             scene = scene.next
             play = True
 
