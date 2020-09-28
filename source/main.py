@@ -24,8 +24,10 @@ scene.nextScene(stageOneScene) #타이틀화면 다음은 스테이지 1 화면�
 #player = player.Player(100,400)
 player = player.Player(screen)
 allSprites=pygame.sprite.Group()
+allSprites.add(player)
 
 play = False
+
 while run:
     clock.tick(60)
 
@@ -39,13 +41,12 @@ while run:
             scene = scene.next
             play = True
 
-    scene.render(screen)
     scene.update()
+    scene.render(screen)
 
     if play:
-        player.render(screen)
-        player.update()
-        #print(player.rect)
+        allSprites.update() #allSprites의 등록된 모든 객체를 업데이트
+        allSprites.draw(screen) #allSprites의 등록된 모든 객체를 화면에 그림.
 
     #pygame.display.update()
     pygame.display.flip()

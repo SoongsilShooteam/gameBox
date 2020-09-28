@@ -2,16 +2,20 @@ import pygame
 
 
 class Object(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, x, y, img):
         pygame.sprite.Sprite.__init__(self)
-
         self.x = x
         self.y = y
+        self.image = pygame.image.load(img)
+        #self.rect = self.image.get_rect() #지울 예정
+        #self.rect.center = (self.x, self.y) #지울 예정
 
     #이미지 세팅
-    def setImg(self, img):
-        self.img = pygame.image.load(img)
+    #def setImg(self, img): #지울 예정
 
+    def update(self):
+        self.rect = self.image.get_rect()
+        self.rect.center = (self.x, self.y)
     """
     오버라이딩 함수 
     function draw
@@ -20,13 +24,10 @@ class Object(pygame.sprite.Sprite):
     screen = 이미지를 그릴 화면
     """
     def render(self, screen):
-        self.rect = self.img.get_rect()
-        self.rect.center = (self.x, self.y)
-
-        screen.blit(self.img, self.rect)
+        screen.blit(self.image, self.rect)
 
     def getWidth(self):
-        return self.img.get_width()
+        return self.image.get_width()
 
     def getHeight(self):
-        return self.img.get_height()
+        return self.image.get_height()

@@ -7,12 +7,9 @@ class StageOneScene(SceneManager):
 
     def process(self, events):
         pass
-        #print("process")
 
     def update(self):
         pass
-        #print("update")
 
     def render(self, screen):
         screen.fill((100, 100, 100))
-        #print("StageOneScene")

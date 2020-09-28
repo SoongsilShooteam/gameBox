@@ -12,20 +12,23 @@ class Player(Object):
 
         self.x = screen.get_width() / 2
         self.y = screen.get_height() / 2 + 200
-        self.setImg("images/player.png")
+        self.image=pygame.image.load("images/player.png")
+        #self.setImg("images/player.png")
 
     def update(self):
         key = pygame.key.get_pressed()
 
+        self.rect = self.image.get_rect()
+        self.rect.center = (self.x, self.y)
+
         if key[pygame.K_LEFT]:
             self.x -= 3
-            #print(self.x)
+
         elif key[pygame.K_RIGHT]:
             self.x += 3
-            #print(self.x)
+
         elif key[pygame.K_UP]:
             self.y -= 3
-            #print(self.y)
+
         elif key[pygame.K_DOWN]:
             self.y += 3
-            #print(self.y)
