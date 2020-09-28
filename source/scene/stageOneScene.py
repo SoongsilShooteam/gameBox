@@ -12,4 +12,4 @@ class StageOneScene(SceneManager):
         pass
 
     def render(self, screen):
-        screen.fill((100, 100, 100))
+        screen.fill((255, 255, 255))
