@@ -13,10 +13,7 @@ isRun = True
 isPlay = False
 
 # 프로세스의 현재 경로를 루트로 변경함.
-#os.chdir("../")
-
-
-#$#@%#%#%^#%#^#$^$#%^$%^
+os.chdir("../")
 
 titleScene = titleScene.TitleScene(screen) #타이틀 화면 생성
 stageOneScene = stageOneScene.StageOneScene() #스테이지 1 생성
