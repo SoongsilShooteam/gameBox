@@ -1,6 +1,6 @@
 import pygame
 import os
-from source.scene import titleScene,stageOneScene
+from source.scene import titleScene, stageOneScene
 from source.object import player, enemy
 
 pygame.init()
@@ -16,7 +16,7 @@ isPlay = False
 os.chdir("../")
 
 titleScene = titleScene.TitleScene(screen) #타이틀 화면 생성
-stageOneScene = stageOneScene.StageOneScene() #스테이지 1 생성
+stageOneScene = stageOneScene.StageOneScene(screen) #스테이지 1 생성 screen 추가
 scene = titleScene #처음 화면을 타이틀 화면으로 고정
 scene.nextScene(stageOneScene) #타이틀화면 다음은 스테이지 1 화면으로 고정
 
