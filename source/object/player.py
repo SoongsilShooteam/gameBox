@@ -8,13 +8,10 @@ print(os.getcwd())
 
 class Player(Object):
     def __init__(self, screen):
-        pygame.sprite.Sprite.__init__(self)
+        super().__init__(screen.get_width() / 2, screen.get_height() / 2 + 200, "images/player.png")
 
         self.screenX, self.screenY = pygame.display.get_surface().get_size()
-        self.x = screen.get_width() / 2
-        self.y = screen.get_height() / 2 + 200
         self.speed = 3
-        self.image = pygame.image.load("images/player.png")
         #self.setImg("images/player.png")
 
     def update(self):
