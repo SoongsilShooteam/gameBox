@@ -2,7 +2,7 @@ import pygame
 import os
 import math
 from source.const import PI
-from source.math import Vector2
+from source.vector import Vector2
 from source.object.object import Object
 
 # 적이 쏘는 총알
