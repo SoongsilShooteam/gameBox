@@ -1,7 +1,7 @@
 import pygame
 import os
 from source.scene import titleScene,stageOneScene
-from source.object import player
+from source.object import player, enemy
 
 pygame.init()
 
@@ -25,6 +25,10 @@ player = player.Player(screen) #플레이어 객체 생성
 allSprites = pygame.sprite.Group() #allSprites 객체 생성
 allSprites.add(player) #allSprites 객체에 player 추가
 
+enemy1 = enemy.NWayBentSpiralEnemy(player, allSprites, screen.get_width() / 2 - 200, 150, 3) # 적 객체 생성
+enemy2 = enemy.NormalEnemy(player, allSprites, screen.get_width() / 2 + 200, 150) # 적 객체 생성
+allSprites.add(enemy1) # allSprites 객체에 enemy 추가
+allSprites.add(enemy2) # allSprites 객체에 enemy 추가
 
 while isRun:
     clock.tick(60)
