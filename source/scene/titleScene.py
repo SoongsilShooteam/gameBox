@@ -1,31 +1,17 @@
 from source.scene.sceneManager import *
 from source.object.object import Object
-import os
-
-os.chdir(os.getcwd())
-print(os.getcwd())
 
 
 class TitleScene(SceneManager):
-    def __init__(self, screen):
-        SceneManager.__init__(self)
-
-        self.menu = [None, None, None]
-        for i in range(0, 3):
-            self.menu[i] = (Object(0, 0, "images/menu.png"))
-            #self.menu[i].setImg("images/menu.png") #지울 예정
-            self.menu[i].x = 0.5 * screen.get_width()
-            self.menu[i].y = 0.5 * screen.get_height() + i * 100
-            self.menu[i].update()
-
-    def process(self, events):
-        pass
+    def __init__(self):
+        super().__init__()
+        #self.spriteGroup = spriteGroup
+        self.img = 'assets/images/title.png'
+        self.image = pygame.image.load(self.img)
+        self.x = 0.5 * self.image.get_width()
+        self.y = 0.5 * self.image.get_height()
+        self.now = "title"
+        #self.spriteGroup.add(self)
 
     def update(self):
-        pass
-
-    def render(self, screen):
-        screen.fill((0, 0, 0))
-
-        for i in range(3):
-            self.menu[i].render(screen)
+        super().update()

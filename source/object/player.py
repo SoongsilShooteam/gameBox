@@ -11,7 +11,7 @@ class Player(Object):
         super().__init__(screen.get_width() / 2, screen.get_height() / 2 + 200, "images/player.png")
 
         self.screenX, self.screenY = pygame.display.get_surface().get_size()
-        self.speed = 3
+        self.speed = 5
         #self.setImg("images/player.png")
 
     def update(self):

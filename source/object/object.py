@@ -7,11 +7,6 @@ class Object(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.image = pygame.image.load(img)
-        #self.rect = self.image.get_rect() #지울 예정
-        #self.rect.center = (self.x, self.y) #지울 예정
-
-    #이미지 세팅
-    #def setImg(self, img): #지울 예정
 
     def update(self):
         self.rect = self.image.get_rect()
