@@ -1,6 +1,7 @@
 from pygame import mixer as Mixer
 import pygame
 
+
 class SceneManager(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -19,7 +20,7 @@ class SceneManager(pygame.sprite.Sprite):
         pass
 
     def update(self):
-        print(self.now)
+        #print(self.now)
         if self.image is not None:
             self.rect = self.image.get_rect()
             self.rect.center = (self.x, self.y)

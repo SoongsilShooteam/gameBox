@@ -8,13 +8,14 @@ print(os.getcwd())
 
 class Player(Object):
     def __init__(self, screen):
-        super().__init__(screen.get_width() / 2, screen.get_height() / 2 + 200, "images/player.png")
+        super().__init__(screen.get_width() / 2, screen.get_height() / 2 + 200, "assets/images/player.png")
 
         self.screenX, self.screenY = pygame.display.get_surface().get_size()
         self.speed = 5
         #self.setImg("images/player.png")
 
     def update(self):
+        super().update()
         key = pygame.key.get_pressed()
 
         self.rect = self.image.get_rect()
@@ -24,14 +25,14 @@ class Player(Object):
             if (self.x - self.speed) > 0:
                 self.x -= self.speed
 
-        elif key[pygame.K_RIGHT]:
+        if key[pygame.K_RIGHT]:
             if (self.x + self.speed) < self.screenX:
                 self.x += self.speed
 
-        elif key[pygame.K_UP]:
+        if key[pygame.K_UP]:
             if (self.y - self.speed) > 0:
                 self.y -= self.speed
 
-        elif key[pygame.K_DOWN]:
+        if key[pygame.K_DOWN]:
             if (self.y + self.speed) < self.screenY:
                 self.y += self.speed
