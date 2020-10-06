@@ -23,7 +23,7 @@ scene = titleScene #처음 화면을 타이틀 화면으로 고정
 scene.nextScene(stageOneScene) #타이틀화면 다음은 스테이지 1 화면으로 고정
 
 #player = player.Player(100,400)
-player = player.Player(screen) #플레이어 객체 생성
+player = player.Player(screen, allSprites) #플레이어 객체 생성
 allSprites.add(player) #allSprites 객체에 player 추가
 
 enemy1 = enemy.NWayBentSpiralEnemy(player, allSprites, screen.get_width() / 2 - 200, 150, 3) # 적 객체 생성
