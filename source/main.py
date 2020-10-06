@@ -6,7 +6,7 @@ from source.object import player, enemy
 
 pygame.init()
 
-size = [1024, 768]
+size = [480, 800]
 screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 pygame.display.set_caption("TEST")
@@ -14,7 +14,7 @@ isRun = True
 isPlay = False
 
 # 프로세스의 현재 경로를 루트로 변경함.
-os.chdir("../")
+#os.chdir("../")
 
 allSprites = pygame.sprite.Group() #allSprites 객체 생성
 titleScene = titleScene.TitleScene() #타이틀 화면 생성
