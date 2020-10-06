@@ -1,6 +1,7 @@
 from source.object.object import Object
 import pygame
 import os
+from source.scene.stageOneScene import *
 
 os.chdir(os.getcwd())
 print(os.getcwd())
@@ -13,10 +14,14 @@ class Player(Object):
         self.screenX, self.screenY = pygame.display.get_surface().get_size()
         self.speed = 5
         self.bullets = []
+        self.stageOne = StageOneScene()
         #self.setImg("images/player.png")
+
+
 
     def update(self):
         super().update()
+        print("player", self.stageOne.x, self.stageOne.y)
         key = pygame.key.get_pressed()
 
         self.rect = self.image.get_rect()

@@ -4,6 +4,7 @@ import math
 from source.const import PI
 from source.vector import Vector2
 from source.object.object import Object
+from source.scene.stageOneScene import *
 
 # 적이 쏘는 총알
 class EnemyBullet(Object):
@@ -15,12 +16,13 @@ class EnemyBullet(Object):
         self.speed = speed  # 총알이 나아가는 속도
         self.speedRate = speedRate  # 프레임당 속도 변화율
         self.screenSize = pygame.display.get_surface().get_size()
+        self.stageOne = StageOneScene()
 
         super().__init__(x, y, "assets/images/bullet01.png")
 
     def update(self):
         super().update()
-
+        print("enermy", self.stageOne.x, self.stageOne.y)
         rad = self.angle * (PI / 180) # 각도를 radian으로 변환하고
         self.x += self.speed * math.cos(rad) # 이 radian 값을 cos, sin 함수에 넣어주면
         self.y += self.speed * math.sin(rad) # 이 총알이 날아가야할 방향이 나옴
