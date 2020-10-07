@@ -32,6 +32,11 @@ class EnemyBullet(Object):
 
         self.checkDestroyMe()
         self.checkPlayerCollision()
+        
+    def onHitPlayerBullet(self):
+        self.hp -= 1
+        if self.hp == 0:
+            self.kill()
 
     # 총알이 화면 밖으로 나가면 파괴되어야 하는데, 이를 처리해주는 함수
     def checkDestroyMe(self):
