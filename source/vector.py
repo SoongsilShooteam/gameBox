@@ -19,7 +19,7 @@ class Vector2:
 
     # 두 벡터 사이각 구하기
     def angle(self, v2):
-        v = Vector2(v2.x - self.x, v2.y - self.y).normalized()
+        v = Vector2(v2.x - self.x, v2.y - self.y)
         return math.atan2(v.y, v.x)
 
     # 벡터의 길이 구하기
