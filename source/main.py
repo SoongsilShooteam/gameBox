@@ -14,7 +14,7 @@ isRun = True
 isPlay = False
 
 # 프로세스의 현재 경로를 루트로 변경함.
-#os.chdir("../")
+os.chdir("../")
 
 allSprites = pygame.sprite.Group() #allSprites 객체 생성
 

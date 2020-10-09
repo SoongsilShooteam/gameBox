@@ -1,9 +1,6 @@
-import arcade
-#from source.scene import sceneManager
 from source.object import enemy, player
 from pygame import mixer as Mixer
 import pygame
-
 
 class StageOneScene(pygame.sprite.Sprite):
     def __init__(self, screen):
