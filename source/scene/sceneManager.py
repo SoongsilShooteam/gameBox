@@ -1,43 +1,35 @@
-from pygame import mixer as Mixer
+
 import pygame
 
+def singleton(cls):
+    instance = [None]
+    def wrapper(*args, **kwargs):
+        if instance[0] is None:
+            instance[0] = cls(*args, **kwargs)
+        return instance[0]
 
-class SceneManager(pygame.sprite.Sprite):
+    return wrapper
+
+
+@singleton
+class SceneManager:
     def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-        self.x = None
-        self.y = None
-        self.next = self
-        self.bgm = None
-        self.now = None
-        self.image = None
-        self.isTitleBGM = False
-        self.isStageOneBGM = False
-
-        Mixer.init()
+        print("********** Init SceneManager **********")
+        self.scene = None
 
     def process(self, events):   #필요성 검토 중
         pass
 
     def update(self):
-        #print(self.now)
-        if self.image is not None:
-            self.rect = self.image.get_rect()
-            self.rect.center = (self.x, self.y)
+        if self.scene is not None:
+            self.scene.update()
 
-        if self.isTitleBGM == False and self.now == "title":
-            Mixer.music.load("assets/sounds/title.mp3")
-            self.isTitleBGM = True
-            self.isStageOneBGM = False
-            Mixer.music.play()
-        elif self.isStageOneBGM == False and self.now == "stageOne":
-            Mixer.music.load("assets/sounds/stageOne.mp3")
-            self.isTitleBGM = False
-            self.isStageOneBGM = True
-            Mixer.music.play()
+    def render(self):
+        self.scene.render()
+        #screen.blit(self.image, self.rect)
 
-    def render(self, screen):
-        screen.blit(self.image, self.rect)
+    def setScene(self, scene):
+        self.scene = scene
 
-    def nextScene(self, scene):
-        self.next = scene
+    def getPlayer(self):
+        return self.scene.player
