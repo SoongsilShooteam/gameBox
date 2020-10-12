@@ -1,8 +1,9 @@
 from source.object.object import Object
-import pygame
-import os
+from source.vector import Vector2
 from source.scene.stageOneScene import *
 from source.scene import sceneManager
+import pygame
+import os
 
 os.chdir(os.getcwd())
 print(os.getcwd())
@@ -14,16 +15,13 @@ class Player(Object):
         self.spriteGroup = spriteGroup
         self.screenX, self.screenY = pygame.display.get_surface().get_size()
         self.speed = 5
-        self.bullets = []
-        self.sceneManager = sceneManager.SceneManager()
-
+        self.lastTime = 0.00
+        self.shootInterval = 0.1
+        self.hp = 5
         #self.setImg("images/player.png")
-
-
 
     def update(self):
         super().update()
-
         key = pygame.key.get_pressed()
 
         self.rect = self.image.get_rect()
@@ -46,19 +44,24 @@ class Player(Object):
                 self.y += self.speed
 
         if key[pygame.K_SPACE] :
-            bullet = Player_Bullet(self.x, self.y)
-            self.spriteGroup.add(bullet)
-            Player_Bullet.update(bullet)
+            currentTime = pygame.time.get_ticks()
+            if (currentTime - self.lastTime) / 1000.0 >= self.shootInterval:
+                bullet = Player_Bullet(self.x, self.y, self.spriteGroup)
+                bullet.shootbullets()
+                self.lastTime = currentTime
+
 
 
 class Player_Bullet(Object):
-    def __init__(self,x,y):
+    def __init__(self,x,y, spriteGroup):
         super().__init__(x,y, "assets/images/player_bullet.png")
         self.speed = 10
+        self.screenSize = pygame.display.get_surface().get_size()
+        self.spriteGroup = spriteGroup
+        self.sceneManager = sceneManager.SceneManager()
+
         #self.setImg("images/player.png")
 
-    def uddd(self):
-        self.update()
 
     def update(self):
         super().update()
@@ -67,6 +70,34 @@ class Player_Bullet(Object):
         self.rect = self.image.get_rect()
         self.rect.center = (self.x, self.y)
 
+
+        self.checkDestroyMe()
+        self.checkPlayerCollision()
+
         self.y -= self.speed
+
+    # 총알 발사
+    def shootbullets(self):
+        self.spriteGroup.add(self)
+
+
+    # 총알이 화면 밖으로 나가면 파괴되어야 하는데, 이를 처리해주는 함수
+    def checkDestroyMe(self):
+        if (self.x < -30 or
+            self.y < - 30 or
+            self.x > self.screenSize[0] + 30 or
+            self.y > self.screenSize[1] + 30):
+            self.kill()
+
+    # 총알이 적과 충돌했는지 판단하는 함수
+    def checkPlayerCollision(self):
+        for enemy in self.sceneManager.getEnemyList() :
+            v1 = Vector2(enemy.x,enemy.y)
+            v2 = Vector2(self.x, self.y)
+            if v1.distance(v2) < 20.0:
+                print("Collide_E")
+                self.kill()
+                enemy.onHitPlayerBullet()
+
 
 
