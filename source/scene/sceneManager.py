@@ -15,33 +15,39 @@ def singleton(cls):
 class SceneManager:
     def __init__(self):
         print("********** Init SceneManager **********")
-        self.scene = None
+        self.nextScene = None
+        self.currentScene = None
 
     def process(self, events):   #필요성 검토 중
         pass
 
     def update(self):
-        if self.scene is not None:
-            self.scene.update()
+        if self.nextScene is not None:
+            self.currentScene = self.nextScene
+            self.nextScene = None
+
+        if self.currentScene is not None:
+            self.currentScene.update()
 
     def render(self):
-        self.scene.render()
+        self.currentScene.render()
         #screen.blit(self.image, self.rect)
 
     def setScene(self, scene):
-        self.scene = scene
+        self.nextScene = scene
 
     def addEnemy(self, enemy):
-        self.scene.enemyList.append(enemy)
+        self.currentScene.enemyList.append(enemy)
 
     def addEnemyBullet(self, enemyBullet):
-        self.scene.enemyBulletList.append(enemyBullet)
+        self.currentScene.enemyBulletList.append(enemyBullet)
 
     def removeEnemy(self, enemy):
-        self.scene.removeEnemy(enemy)
+        self.currentScene.removeEnemy(enemy)
 
     def getPlayer(self):
-        return self.scene.player
+        return self.currentScene.player
 
     def getEnemyList(self):
-        return self.scene.enemyList
+        return self.currentScene.enemyList
+
