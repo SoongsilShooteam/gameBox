@@ -31,5 +31,14 @@ class SceneManager:
     def setScene(self, scene):
         self.scene = scene
 
+    def addEnemy(self, enemy):
+        self.scene.enemyList.append(enemy)
+
+    def addEnemyBullet(self, enemyBullet):
+        self.scene.enemyBulletList.append(enemyBullet)
+
     def getPlayer(self):
         return self.scene.player
+
+    def getEnemyList(self):
+        return self.scene.enemyList

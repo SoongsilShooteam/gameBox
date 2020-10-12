@@ -9,6 +9,7 @@ class Object(pygame.sprite.Sprite):
         self.image = pygame.image.load(img)
         self.rect = self.image.get_rect()
         self.rect.center = (self.x, self.y)
+
     def update(self):
         self.rect = self.image.get_rect()
         self.rect.center = (self.x, self.y)
