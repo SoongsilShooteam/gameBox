@@ -49,26 +49,21 @@ class Player(Object):
         if key[pygame.K_SPACE] :
             currentTime = pygame.time.get_ticks()
             if (currentTime - self.lastTime) / 1000.0 >= self.shootInterval:
-                bullet = Player_Bullet(self.x, self.y, self.spriteGroup)
-                bullet.shootbullets()
+                self.spriteGroup.add(Player_Bullet(self.x, self.y))
                 self.lastTime = currentTime
 
     def onHitEnemyBullet(self):
         self.hp -= 1
         if self.hp == 0:
             self.kill()
-            #self.sceneManager.setScene(titleScene.TitleScene(self.screen))
+            self.sceneManager.setScene(titleScene.TitleScene(self.screen))
 
 class Player_Bullet(Object):
-    def __init__(self,x,y, spriteGroup):
+    def __init__(self, x, y):
         super().__init__(x,y, "assets/images/player_bullet.png")
         self.speed = 10
         self.screenSize = pygame.display.get_surface().get_size()
-        self.spriteGroup = spriteGroup
         self.sceneManager = sceneManager.SceneManager()
-
-        #self.setImg("images/player.png")
-
 
     def update(self):
         super().update()
@@ -81,10 +76,6 @@ class Player_Bullet(Object):
         self.checkPlayerCollision()
 
         self.y -= self.speed
-
-    # 총알 발사
-    def shootbullets(self):
-        self.spriteGroup.add(self)
 
     # 총알이 화면 밖으로 나가면 파괴되어야 하는데, 이를 처리해주는 함수
     def checkDestroyMe(self):
