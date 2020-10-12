@@ -51,6 +51,7 @@ class EnemyBullet(Object):
         if v1.distance(v2) < 20.0:
             print("Collide")
             self.kill()
+            self.player.onHitEnemyBullet()
 
 # 모든 적이 상속받는 공통 클래스
 class Enemy(Object):
