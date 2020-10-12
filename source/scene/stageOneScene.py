@@ -68,6 +68,10 @@ class StageOneScene():
         self.allSprites.add(enemy)
         self.enemyList.append(enemy)
 
+    def removeEnemy(self, enemy):
+        self.allSprites.remove(enemy)
+        self.enemyList.remove(enemy)
+
     def update(self):
         self.allSprites.update()  # allSprites의 등록된 모든 객체를 업데이트
 

@@ -37,6 +37,9 @@ class SceneManager:
     def addEnemyBullet(self, enemyBullet):
         self.scene.enemyBulletList.append(enemyBullet)
 
+    def removeEnemy(self, enemy):
+        self.scene.removeEnemy(enemy)
+
     def getPlayer(self):
         return self.scene.player
 

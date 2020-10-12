@@ -82,7 +82,7 @@ class Enemy(Object):
     def onHitPlayerBullet(self):
         self.hp -= 1
         if self.hp == 0:
-            self.kill()
+            self.sceneManager.removeEnemy(self)
 
     def shootBullet(self):
         bullet = EnemyBullet(self.spriteGroup, self.x, self.y, self.shootAngle, self.shootAngleRate, self.shootSpeed,self.shootSpeedRate)
