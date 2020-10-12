@@ -16,9 +16,9 @@ class BackgroundSprite(Object):
         self.backgroundMoveSpeed = 2 # 배경이 움직이는 속도
 
     def update(self):
-        self.rect.centery = self.rect.centery - 1
-        if self.rect.top == -800:  # 백그라운드가 일정 y좌표가 되면 원래의 위치로 되돌려준다.
-            self.rect.top = 0
+        self.rect.centery = self.rect.centery + 1
+        if self.rect.top == 1:  # 백그라운드가 일정 y좌표가 되면 원래의 위치로 되돌려준다.
+            self.rect.top = -800
 
 class StageOneScene():
     def __init__(self, screen):
