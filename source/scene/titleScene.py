@@ -1,4 +1,4 @@
-from source.scene import stageOneScene, sceneManager
+from source.scene import stageOneScene, sceneManager, howToPlayScene
 from pygame import mixer as Mixer
 from source.object.object import Object
 import pygame
@@ -19,7 +19,6 @@ class TitleScene:
         self.buttonImage1 = "assets/images/buttonPlay.png"
         self.buttonImage2 = "assets/images/buttonHowToPlay.png"
         self.buttonImage3 = "assets/images/buttonQuit.png"
-        self.mousePos = pygame.mouse.get_pos()
         self.menu = ["Play", "HowToPlay", "Quit"]
         for i in range(3):
             if i == 0:
@@ -70,6 +69,12 @@ class TitleScene:
 
         if 155 < self.mousePos[0] < 325 and 405 < self.mousePos[1] < 475 and click[0] == 1:
             self.sceneManager.setScene(stageOneScene.StageOneScene(self.screen))
+
+        if 57 < self.mousePos[0] < 423 and 515 < self.mousePos[1] < 585 and click[0] == 1:
+            self.sceneManager.setScene(howToPlayScene.howToPlayScene(self.screen))
+
+        if 173 < self.mousePos[0] < 307 and 625 < self.mousePos[1] < 695 and click[0] == 1:
+            exit()
 
     def render(self):
         self.screen.blit(self.image, self.rect)
