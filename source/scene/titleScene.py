@@ -15,6 +15,18 @@ class TitleScene:
         self.player = None
         self.sceneManager = sceneManager.SceneManager()
         self.screen = screen
+        self.menu = ["Play", "HowToPlay", "Quit"]
+        for i in range(0, 3):
+            if i == 0:
+                self.menu[i] = (Object(0, 0, "assets/images/buttonPlay.png"))
+            elif i == 1:
+                self.menu[i] = (Object(0, 0, "assets/images/buttonHowToPlay.png"))
+            else:
+                self.menu[i] = (Object(0, 0, "assets/images/buttonQuit.png"))
+            self.menu[i].x = 0.5 * screen.get_width()
+            self.menu[i].y = 0.55 * screen.get_height() + i * 110
+            self.menu[i].update()
+
 
         Mixer.init()
         Mixer.music.load("assets/sounds/title.mp3")
@@ -31,3 +43,6 @@ class TitleScene:
 
     def render(self):
         self.screen.blit(self.image, self.rect)
+
+        for i in range(3):
+            self.menu[i].render(self.screen)
