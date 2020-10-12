@@ -42,10 +42,11 @@ class StageOneScene(pygame.sprite.Sprite):
         #self.rect = self.image.get_rect()
         print(self.rect.top)
 
-        self.rect.centery = self.rect.centery - 1
+        self.rect.centery = self.rect.centery + 1
 
-        if self.rect.top == -800:
-            self.rect.top = 0
+        if self.rect.top == 1:
+            self.rect.bottom = 800
+
 
         #key = pygame.key.get_pressed()
         #if key[pygame.K_q]:
