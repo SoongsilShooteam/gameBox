@@ -71,7 +71,7 @@ class TitleScene:
             self.sceneManager.setScene(stageOneScene.StageOneScene(self.screen))
 
         if 57 < self.mousePos[0] < 423 and 515 < self.mousePos[1] < 585 and click[0] == 1:
-            self.sceneManager.setScene(howToPlayScene.howToPlayScene(self.screen))
+            self.sceneManager.setScene(howToPlayScene.HowToPlayScene(self.screen))
 
         if 173 < self.mousePos[0] < 307 and 625 < self.mousePos[1] < 695 and click[0] == 1:
             exit()

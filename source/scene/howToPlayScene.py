@@ -3,9 +3,9 @@ from pygame import mixer as Mixer
 from source.object.object import Object
 import pygame
 
-class howToPlayScene():
+class HowToPlayScene():
     def __init__(self, screen):
-        print("********** Init howToPlayScene **********")
+        print("********** Init HowToPlayScene **********")
         self.img = 'assets/images/howToPlayScene.png'
         self.image = pygame.transform.scale(pygame.image.load(self.img), (480, 800))
         self.rect = self.image.get_rect()
