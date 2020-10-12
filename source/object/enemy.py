@@ -1,6 +1,7 @@
 import pygame
 import os
 import math
+import random
 from source.const import PI
 from source.vector import Vector2
 from source.object.object import Object
@@ -34,11 +35,6 @@ class EnemyBullet(Object):
 
         self.checkDestroyMe()
         self.checkPlayerCollision()
-        
-    def onHitPlayerBullet(self):
-        self.hp -= 1
-        if self.hp == 0:
-            self.kill()
 
     # 총알이 화면 밖으로 나가면 파괴되어야 하는데, 이를 처리해주는 함수
     def checkDestroyMe(self):
@@ -83,6 +79,11 @@ class Enemy(Object):
             self.shootBullet()
             self.lastTime = currentTime
 
+    def onHitPlayerBullet(self):
+        self.hp -= 1
+        if self.hp == 0:
+            self.sceneManager.removeEnemy(self)
+
     def shootBullet(self):
         bullet = EnemyBullet(self.spriteGroup, self.x, self.y, self.shootAngle, self.shootAngleRate, self.shootSpeed,self.shootSpeedRate)
         bullet.update()
@@ -107,6 +108,9 @@ class NWayBentSpiralEnemy(Enemy):
         super().update()
         self.shootAngle += 3
 
+        if self.y < 100:
+            self.y += 1.0
+
     def shootBullet(self):
         for i in range(self.n):
             super().shootBullet()
@@ -116,8 +120,12 @@ class NWayBentSpiralEnemy(Enemy):
 class NormalEnemy(Enemy):
     def __init__(self, spriteGroup, x, y):
         super().__init__(spriteGroup, 10, 0, x, y, "assets/images/enemy01.png")
-
+        self.speed = random.randrange(2, 5)
         self.shootInterval = 1.0
+
+    def update(self):
+        super().update()
+        self.y += self.speed
 
     def shootBullet(self):
         v1 = Vector2(self.x, self.y)
