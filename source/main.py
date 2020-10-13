@@ -14,13 +14,15 @@ isRun = True
 isPlay = False
 
 # 프로세스의 현재 경로를 루트로 변경함.
-os.chdir("../")
+path = os.path.join(os.path.dirname(__file__), "../")
+os.chdir(path)
 
 allSprites = pygame.sprite.Group() #allSprites 객체 생성
 
 titleScene = titleScene.TitleScene(screen) #타이틀 화면 생성
 sceneManager = sceneManager.SceneManager() #sceneManager 생성
 sceneManager.setScene(titleScene) #시작화면을 titleScene 화면으로 고정
+sceneManager.setStartScene(titleScene)
 
 
 while isRun:
