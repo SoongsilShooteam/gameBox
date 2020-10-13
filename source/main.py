@@ -22,8 +22,6 @@ allSprites = pygame.sprite.Group() #allSprites 객체 생성
 titleScene = titleScene.TitleScene(screen) #타이틀 화면 생성
 sceneManager = sceneManager.SceneManager() #sceneManager 생성
 sceneManager.setScene(titleScene) #시작화면을 titleScene 화면으로 고정
-sceneManager.setStartScene(titleScene)
-
 
 while isRun:
     clock.tick(60)
