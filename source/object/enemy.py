@@ -10,7 +10,7 @@ from source.scene import sceneManager
 
 # 적이 쏘는 총알
 class EnemyBullet(Object):
-    def __init__(self, spriteGroup, x, y, angle, angleRate, speed, speedRate, bullet_img):
+    def __init__(self, spriteGroup, x, y, angle, angleRate, speed, speedRate, bulletImg):
 
         self.spriteGroup = spriteGroup
         self.angle = angle  # 총알이 나아가는 각도
@@ -20,7 +20,7 @@ class EnemyBullet(Object):
         self.screenSize = pygame.display.get_surface().get_size()
         self.sceneManager = sceneManager.SceneManager()
         self.player = self.sceneManager.getPlayer()
-        super().__init__(x, y, bullet_img)
+        super().__init__(x, y, bulletImg)
 
         # 총알 회전도에 따라서 image 회전
         imageAngle = self.angle
@@ -61,7 +61,7 @@ class EnemyBullet(Object):
 
 # 모든 적이 상속받는 공통 클래스
 class Enemy(Object):
-    def __init__(self, spriteGroup, hp, moveSpeed, x, y, img, bullet_img):
+    def __init__(self, spriteGroup, hp, moveSpeed, x, y, img, bulletImg):
 
         self.spriteGroup = spriteGroup
         self.hp = hp # 적의 체력
@@ -74,13 +74,12 @@ class Enemy(Object):
         self.shootInterval = 0.1 # N초마다 총알 쏘기
         self.sceneManager = sceneManager.SceneManager()
         self.player = self.sceneManager.getPlayer()
-        self.bullet_img = bullet_img
+        self.bulletImg = bulletImg
         super().__init__(x, y, img)
 
     def update(self):
         super().update()
 
-        self.player = self.sceneManager.getPlayer()
         currentTime = pygame.time.get_ticks()
         if (currentTime - self.lastTime) / 1000.0 >= self.shootInterval:
             self.shootBullet()
@@ -92,7 +91,7 @@ class Enemy(Object):
             self.sceneManager.removeEnemy(self)
 
     def shootBullet(self):
-        bullet = EnemyBullet(self.spriteGroup, self.x, self.y, self.shootAngle, self.shootAngleRate, self.shootSpeed,self.shootSpeedRate, self.bullet_img)
+        bullet = EnemyBullet(self.spriteGroup, self.x, self.y, self.shootAngle, self.shootAngleRate, self.shootSpeed,self.shootSpeedRate, self.bulletImg)
         bullet.update()
         self.spriteGroup.add(bullet)
 
