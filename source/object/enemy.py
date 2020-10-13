@@ -22,6 +22,12 @@ class EnemyBullet(Object):
         self.player = self.sceneManager.getPlayer()
         super().__init__(x, y, bullet_img)
 
+        # 총알 회전도에 따라서 image 회전
+        imageAngle = self.angle
+        if imageAngle < 0.0:
+            imageAngle += 360.0
+        self.image = pygame.transform.rotate(self.image, (360 - imageAngle) + 90)
+
     def update(self):
         super().update()
 
