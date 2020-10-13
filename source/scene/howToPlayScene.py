@@ -11,11 +11,10 @@ class HowToPlayScene():
         self.rect = self.image.get_rect()
         self.x = self.image.get_width()
         self.y = self.image.get_height()
+        self.screen = screen
         self.player = None
         self.screenX, self.screenY = pygame.display.get_surface().get_size()
         self.sceneManager = sceneManager.SceneManager()
-        self.screen = screen
-
         self.buttonImage = 'assets/images/buttonBack.png'
         self.menu = (Object(0, 0, self.buttonImage))
         self.menu.x = 0.5 * self.screenX
