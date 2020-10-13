@@ -10,7 +10,7 @@ from source.scene import sceneManager
 
 # 적이 쏘는 총알
 class EnemyBullet(Object):
-    def __init__(self, spriteGroup, x, y, angle, angleRate, speed, speedRate):
+    def __init__(self, spriteGroup, x, y, angle, angleRate, speed, speedRate, bullet_img):
 
         self.spriteGroup = spriteGroup
         self.angle = angle  # 총알이 나아가는 각도
@@ -20,7 +20,7 @@ class EnemyBullet(Object):
         self.screenSize = pygame.display.get_surface().get_size()
         self.sceneManager = sceneManager.SceneManager()
         self.player = self.sceneManager.getPlayer()
-        super().__init__(x, y, "assets/images/bullet01.png")
+        super().__init__(x, y, bullet_img)
 
     def update(self):
         super().update()
@@ -55,7 +55,7 @@ class EnemyBullet(Object):
 
 # 모든 적이 상속받는 공통 클래스
 class Enemy(Object):
-    def __init__(self, spriteGroup, hp, moveSpeed, x, y, img):
+    def __init__(self, spriteGroup, hp, moveSpeed, x, y, img, bullet_img):
 
         self.spriteGroup = spriteGroup
         self.hp = hp # 적의 체력
@@ -68,7 +68,7 @@ class Enemy(Object):
         self.shootInterval = 0.1 # N초마다 총알 쏘기
         self.sceneManager = sceneManager.SceneManager()
         self.player = self.sceneManager.getPlayer()
-
+        self.bullet_img = bullet_img
         super().__init__(x, y, img)
 
     def update(self):
@@ -86,14 +86,14 @@ class Enemy(Object):
             self.sceneManager.removeEnemy(self)
 
     def shootBullet(self):
-        bullet = EnemyBullet(self.spriteGroup, self.x, self.y, self.shootAngle, self.shootAngleRate, self.shootSpeed,self.shootSpeedRate)
+        bullet = EnemyBullet(self.spriteGroup, self.x, self.y, self.shootAngle, self.shootAngleRate, self.shootSpeed,self.shootSpeedRate, self.bullet_img)
         bullet.update()
         self.spriteGroup.add(bullet)
 
 # 선회가속 소용돌이 탄을 발사하는 적
 class BentSpiralEnemy(Enemy):
     def __init__(self, spriteGroup, x, y):
-        super().__init__(spriteGroup, 100, 0, x, y, "assets/images/enemy01.png")
+        super().__init__(spriteGroup, 100, 0, x, y, "assets/images/enemy01.png", "assets/images/bullet01.png")
 
     def update(self):
         super().update()
@@ -102,7 +102,7 @@ class BentSpiralEnemy(Enemy):
 # 다중 선회가속 소용돌이 탄을 발사하는 적 2
 class NWayBentSpiralEnemy(Enemy):
     def __init__(self, spriteGroup, x, y, n):
-        super().__init__(spriteGroup, 100, 0, x, y, "assets/images/enemy01.png")
+        super().__init__(spriteGroup, 100, 0, x, y, "assets/images/enemy01.png", "assets/images/bullet01.png")
         self.n = n
 
     def update(self):
@@ -120,7 +120,7 @@ class NWayBentSpiralEnemy(Enemy):
 # 유저가 있는 방향으로 탄을 발사하는 적
 class NormalEnemy(Enemy):
     def __init__(self, spriteGroup, x, y):
-        super().__init__(spriteGroup, 3, 0, x, y, "assets/images/enemy01.png")
+        super().__init__(spriteGroup, 3, 0, x, y, "assets/images/enemy01.png", "assets/images/bullet01.png")
         self.speed = random.randrange(2, 5)
         self.shootInterval = 1.0
 
