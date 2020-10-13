@@ -2,7 +2,8 @@ from source.object.object import Object
 from source.vector import Vector2
 from source.scene.stageOneScene import *
 from source.scene import sceneManager
-from source.scene import titleScene
+from source.scene import sceneManager
+from source.scene import gameOverScene
 import pygame
 import os
 
@@ -56,7 +57,7 @@ class Player(Object):
         self.hp -= 1
         if self.hp == 0:
             self.kill()
-            self.sceneManager.setScene(titleScene.TitleScene(self.screen))
+            self.sceneManager.setScene(gameOverScene.GameOverScene(self.screen))
 
 class Player_Bullet(Object):
     def __init__(self, x, y):
