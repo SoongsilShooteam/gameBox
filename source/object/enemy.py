@@ -109,6 +109,7 @@ class NWayBentSpiralEnemy(Enemy):
     def __init__(self, spriteGroup, x, y, n):
         super().__init__(spriteGroup, 100, 0, x, y, "assets/images/enemy01.png", "assets/images/boss_bullet.png")
         self.n = n
+        self.lastTime2 = currentTime = pygame.time.get_ticks()
 
     def update(self):
         super().update()
@@ -121,6 +122,19 @@ class NWayBentSpiralEnemy(Enemy):
         for i in range(self.n):
             super().shootBullet()
             self.shootAngle += 360.0 / self.n
+
+        # 유도탄 팔사
+        currentTime = pygame.time.get_ticks()
+        if (currentTime - self.lastTime2) / 1000.0 >= 1.0:
+            prevShootAngle = self.shootAngle
+
+            v1 = Vector2(self.x, self.y)
+            v2 = Vector2(self.player.x, self.player.y)
+            self.shootAngle = v1.angle(v2) * 180.0 / PI
+            super().shootBullet()
+
+            self.shootAngle = prevShootAngle
+            self.lastTime2 = currentTime
 
 # 유저가 있는 방향으로 탄을 발사하는 적
 class NormalEnemy(Enemy):
