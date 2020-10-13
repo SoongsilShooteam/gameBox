@@ -90,7 +90,7 @@ class Player_Bullet(Object):
         for enemy in self.sceneManager.getEnemyList() :
             v1 = Vector2(enemy.x,enemy.y)
             v2 = Vector2(self.x, self.y)
-            if v1.distance(v2) < 20.0:
+            if v1.distance(v2) < 25.0:
                 print("Collide_E")
                 self.kill()
                 enemy.onHitPlayerBullet()

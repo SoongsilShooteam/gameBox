@@ -120,7 +120,7 @@ class NWayBentSpiralEnemy(Enemy):
 # 유저가 있는 방향으로 탄을 발사하는 적
 class NormalEnemy(Enemy):
     def __init__(self, spriteGroup, x, y):
-        super().__init__(spriteGroup, 5, 0, x, y, "assets/images/enemy01.png")
+        super().__init__(spriteGroup, 3, 0, x, y, "assets/images/enemy01.png")
         self.speed = random.randrange(2, 5)
         self.shootInterval = 1.0
 
