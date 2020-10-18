@@ -2,18 +2,22 @@ from source.scene import stageOneScene, sceneManager, howToPlayScene
 from pygame import mixer as Mixer
 from source.object.object import Object
 import pygame
-
+import math
 
 class TitleScene:
     def __init__(self, screen):
         print("********** Init TitleScene **********")
-        self.img = 'assets/images/title.png'
-        self.image = pygame.transform.scale(pygame.image.load(self.img), (480, 800))
-        self.rect = self.image.get_rect()
-        self.x = self.image.get_width()
-        self.y = self.image.get_height()
-        self.player = None
         self.screenX, self.screenY = pygame.display.get_surface().get_size()
+        self.allSprites = pygame.sprite.Group() #allSprites 객체 생성
+        self.prevTime = pygame.time.get_ticks()
+        self.elapsedTime = 0.0
+
+        self.bg = Object(self.screenX / 2, self.screenY / 2, 'assets/images/titleSceneBg.png')
+        self.titleImage = Object(self.screenX / 2, 190, 'assets/images/title.png')
+
+        self.allSprites.add(self.bg)
+        self.allSprites.add(self.titleImage)
+
         self.sceneManager = sceneManager.SceneManager()
         self.screen = screen
         self.buttonImage1 = "assets/images/buttonPlay.png"
@@ -36,13 +40,11 @@ class TitleScene:
         Mixer.music.play()
 
     def update(self):
-        if self.image is not None:
-            self.rect = self.image.get_rect()
-            self.rect.center = (self.x * 0.5, self.y * 0.5)
+        self.titleImage.update()
 
-        # key = pygame.key.get_pressed()
-        # if key[pygame.K_SPACE]:
-        #     self.sceneManager.setScene(stageOneScene.StageOneScene(self.screen))
+        self.elapsedTime += (pygame.time.get_ticks() - self.prevTime) / 500.0
+        self.titleImage.y = 190.0 + math.cos(self.elapsedTime) * 10.0
+        self.prevTime = pygame.time.get_ticks()
 
         self.mousePos = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
@@ -77,7 +79,7 @@ class TitleScene:
             exit()
 
     def render(self):
-        self.screen.blit(self.image, self.rect)
+        self.allSprites.draw(self.screen)
 
         for i in range(3):
             self.menu[i].render(self.screen)
