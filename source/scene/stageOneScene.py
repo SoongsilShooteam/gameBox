@@ -90,14 +90,12 @@ class StageOneScene():
 
     def initializePlayer(self):
         self.player = player.Player(self.screen, self.allSprites)  # 플레이어 객체 생성
-        self.allSprites.add(self.player)  # allSprites 객체에 player 추가
 
     def addEnemy(self, enemy):
-        self.allSprites.add(enemy)
         self.enemyList.append(enemy)
 
     def removeEnemy(self, enemy):
-        self.allSprites.remove(enemy)
+        enemy.kill()
         self.enemyList.remove(enemy)
 
     def update(self):

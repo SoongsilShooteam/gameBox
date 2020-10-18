@@ -8,10 +8,47 @@ from source.object.object import Object
 from source.scene.stageOneScene import *
 from source.scene import sceneManager
 
+class BossEnemyHpBar:
+    def __init__(self, spriteGroup, enemy):
+        self.enemy = enemy
+        self.enemyMaxHp = enemy.hp
+        self.enemyPrevHp = enemy.hp
+        self.spriteGroup = spriteGroup
+
+        self.hpGuageBar = Object(0, 0, "assets/images/hp_bar_guage.png")
+        self.originalHpGuageBarImage = self.hpGuageBar.image
+        self.hpGuageBarEdge = Object(0, 0, "assets/images/hp_bar_edge.png")
+
+        screenSize = pygame.display.get_surface().get_size()
+        self.hpGuageBar.x = screenSize[0] / 2 + 17
+        self.originalHpGuageBarX = self.hpGuageBar.x
+        self.hpGuageBar.y = 55
+        self.hpGuageBarEdge.x = screenSize[0] / 2
+        self.hpGuageBarEdge.y = 55
+
+        self.spriteGroup.add(self.hpGuageBar)
+        self.spriteGroup.add(self.hpGuageBarEdge)
+        self.hpGuageBar.update()
+        self.hpGuageBarEdge.update()
+
+    def __del__(self):
+        self.spriteGroup.remove(self.hpGuageBar)
+        self.spriteGroup.remove(self.hpGuageBarEdge)
+
+    def update(self):
+        # 적 Hp에 변화가 생겼다면
+        if self.enemyPrevHp is not self.enemy.hp:
+            hpGuageBarWidth = int(self.lerp(self.originalHpGuageBarImage.get_rect().width, 0, 1.0 - self.enemy.hp / self.enemyMaxHp))
+            self.hpGuageBar.image = pygame.transform.scale(self.originalHpGuageBarImage, (hpGuageBarWidth, self.originalHpGuageBarImage.get_rect().height))
+            self.hpGuageBar.x = self.originalHpGuageBarX - (self.originalHpGuageBarImage.get_rect().width - self.hpGuageBar.image.get_rect().width) / 2
+            self.enemyPrevHp = self.enemy.hp
+
+    def lerp(self, fromValue, toValue, t):
+        return fromValue + (toValue - fromValue) * t
+
 # 적이 쏘는 총알
 class EnemyBullet(Object):
     def __init__(self, spriteGroup, x, y, angle, angleRate, speed, speedRate, bulletImg):
-
         self.spriteGroup = spriteGroup
         self.angle = angle  # 총알이 나아가는 각도
         self.angleRate = angleRate  # 프레임당 각도 변화율
@@ -55,15 +92,14 @@ class EnemyBullet(Object):
         v1 = Vector2(self.player.x, self.player.y)
         v2 = Vector2(self.x, self.y)
         if v1.distance(v2) < 20.0:
-            print("Collide")
             self.kill()
             self.player.onHitEnemyBullet()
 
 # 모든 적이 상속받는 공통 클래스
 class Enemy(Object):
     def __init__(self, spriteGroup, hp, moveSpeed, x, y, img, bulletImg):
-
         self.spriteGroup = spriteGroup
+        self.screenSize = pygame.display.get_surface().get_size()
         self.hp = hp # 적의 체력
         self.moveSpeed = moveSpeed # 적의 이동 속도
         self.lastTime = 0.00
@@ -77,6 +113,8 @@ class Enemy(Object):
         self.bulletImg = bulletImg
         super().__init__(x, y, img)
 
+        spriteGroup.add(self)
+
     def update(self):
         super().update()
 
@@ -84,6 +122,13 @@ class Enemy(Object):
         if (currentTime - self.lastTime) / 1000.0 >= self.shootInterval:
             self.shootBullet()
             self.lastTime = currentTime
+
+        self.checkDestroyMe()
+
+    # 적이 화면 밖으로 나가면 파괴되어야 하는데, 이를 처리해주는 함수
+    def checkDestroyMe(self):
+        if self.y > self.screenSize[1] + 50:
+            self.kill()
 
     def onHitPlayerBullet(self):
         self.hp -= 1
@@ -110,13 +155,24 @@ class NWayBentSpiralEnemy(Enemy):
         super().__init__(spriteGroup, 100, 0, x, y, "assets/images/enemy01.png", "assets/images/boss_bullet.png")
         self.n = n
         self.lastTime2 = currentTime = pygame.time.get_ticks()
+        self.bossEnemyHpBar = BossEnemyHpBar(spriteGroup, self)
 
     def update(self):
         super().update()
         self.shootAngle += 3
 
-        if self.y < 100:
+        if self.y < 130:
             self.y += 1.0
+
+        if self.bossEnemyHpBar is not None:
+            self.bossEnemyHpBar.update()
+
+    def onHitPlayerBullet(self):
+        super().onHitPlayerBullet()
+
+        if self.hp <= 0:
+            del self.bossEnemyHpBar
+            self.bossEnemyHpBar = None
 
     def shootBullet(self):
         for i in range(self.n):

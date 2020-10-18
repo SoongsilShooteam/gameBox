@@ -22,7 +22,8 @@ class Player(Object):
         self.lastTime = 0.00
         self.shootInterval = 0.1
         self.hp = 5
-        #self.setImg("images/player.png")
+
+        spriteGroup.add(self)
 
     def update(self):
         super().update()
