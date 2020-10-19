@@ -37,6 +37,7 @@ class BossEnemyHpBar:
         self.hpGuageBarEdge.update()
 
     def __del__(self):
+        self.spriteGroup.remove(self.hpGuageBarBg)
         self.spriteGroup.remove(self.hpGuageBar)
         self.spriteGroup.remove(self.hpGuageBarEdge)
 
