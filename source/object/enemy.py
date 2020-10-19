@@ -15,19 +15,24 @@ class BossEnemyHpBar:
         self.enemyPrevHp = enemy.hp
         self.spriteGroup = spriteGroup
 
+        self.hpGuageBarBg = Object(0, 0, "assets/images/hp_bar_guage2.png")
         self.hpGuageBar = Object(0, 0, "assets/images/hp_bar_guage.png")
         self.originalHpGuageBarImage = self.hpGuageBar.image
         self.hpGuageBarEdge = Object(0, 0, "assets/images/hp_bar_edge.png")
 
         screenSize = pygame.display.get_surface().get_size()
+        self.hpGuageBarBg.x = screenSize[0] / 2 + 17
+        self.hpGuageBarBg.y = 55
         self.hpGuageBar.x = screenSize[0] / 2 + 17
         self.originalHpGuageBarX = self.hpGuageBar.x
         self.hpGuageBar.y = 55
         self.hpGuageBarEdge.x = screenSize[0] / 2
         self.hpGuageBarEdge.y = 55
 
+        self.spriteGroup.add(self.hpGuageBarBg)
         self.spriteGroup.add(self.hpGuageBar)
         self.spriteGroup.add(self.hpGuageBarEdge)
+        self.hpGuageBarBg.update()
         self.hpGuageBar.update()
         self.hpGuageBarEdge.update()
 
