@@ -6,6 +6,7 @@ from source.scene import sceneManager
 from source.scene import gameOverScene
 import pygame
 import os
+from pygame import mixer as Mixer
 
 os.chdir(os.getcwd())
 print(os.getcwd())
@@ -24,6 +25,9 @@ class Player(Object):
         self.hp = 5
 
         spriteGroup.add(self)
+        Mixer.init()
+        self.gunSound=Mixer.Sound('assets/sounds/gun.mp3')
+
 
     def update(self):
         super().update()
@@ -50,7 +54,11 @@ class Player(Object):
 
         if key[pygame.K_SPACE] :
             currentTime = pygame.time.get_ticks()
+
             if (currentTime - self.lastTime) / 1000.0 >= self.shootInterval:
+                self.gunSound.stop()
+                self.gunSound.play()
+                print("key")
                 self.spriteGroup.add(Player_Bullet(self.x, self.y))
                 self.lastTime = currentTime
 
