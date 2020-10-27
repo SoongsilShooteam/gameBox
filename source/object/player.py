@@ -23,7 +23,6 @@ class Player(Object):
         self.lastTime = 0.00
         self.shootInterval = 0.1
         self.hp = 5
-
         spriteGroup.add(self)
         #Mixer.init()
         #self.gunSound = Mixer.Sound('assets/sounds/gun.mp3')
@@ -36,7 +35,7 @@ class Player(Object):
         self.rect.center = (self.x, self.y)
 
         for i in range(self.hp) :
-            self.spriteGroup.add(Player_Hp_Bar(i*50+50, 750))
+            self.spriteGroup.add(Player_Hp_Bar(i*30+30, 770))
 
         if key[pygame.K_LEFT]:
             if (self.x - self.speed) > 0:
@@ -73,6 +72,8 @@ class Player(Object):
 class Player_Hp_Bar(Object) :
     def __init__(self, x, y):
         super().__init__(x, y, "assets/images/player.png")
+        self.image = pygame.transform.scale(self.image, (30, 30))
+
     def update(self):
         super().update()
         key = pygame.key.get_pressed()
