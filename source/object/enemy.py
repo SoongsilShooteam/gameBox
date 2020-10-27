@@ -158,7 +158,8 @@ class BentSpiralEnemy(Enemy):
 # 다중 선회가속 소용돌이 탄을 발사하는 적 2
 class NWayBentSpiralEnemy(Enemy):
     def __init__(self, spriteGroup, x, y, n):
-        super().__init__(spriteGroup, 100, 0, x, y, "assets/images/enemy01.png", "assets/images/boss_bullet.png")
+        super().__init__(spriteGroup, 100, 0, x, y, "assets/images/boss01.png", "assets/images/boss_bullet.png")
+        self.image = pygame.transform.scale(self.image, (140, 100))
         self.n = n
         self.lastTime2 = currentTime = pygame.time.get_ticks()
         self.bossEnemyHpBar = BossEnemyHpBar(spriteGroup, self)
@@ -201,7 +202,7 @@ class NWayBentSpiralEnemy(Enemy):
 # 유저가 있는 방향으로 탄을 발사하는 적
 class NormalEnemy(Enemy):
     def __init__(self, spriteGroup, x, y):
-        super().__init__(spriteGroup, 3, 0, x, y, "assets/images/enemy01.png", "assets/images/enemy_bullet.png")
+        super().__init__(spriteGroup, 1, 0, x, y, "assets/images/enemy01.png", "assets/images/enemy_bullet.png")
         self.speed = random.randrange(2, 5)
         self.shootInterval = 1.0
 
