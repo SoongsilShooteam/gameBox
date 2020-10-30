@@ -7,6 +7,7 @@ from source.vector import Vector2
 from source.object.object import Object
 from source.scene.stageOneScene import *
 from source.scene import sceneManager
+from pygame import mixer as Mixer
 
 class BossEnemyHpBar:
     def __init__(self, spriteGroup, enemy):
@@ -117,6 +118,9 @@ class Enemy(Object):
         self.sceneManager = sceneManager.SceneManager()
         self.player = self.sceneManager.getPlayer()
         self.bulletImg = bulletImg
+        Mixer.init()
+        self.destroySound = Mixer.Sound('assets/sounds/destroy.mp3')
+
         super().__init__(x, y, img)
 
         spriteGroup.add(self)
@@ -141,6 +145,8 @@ class Enemy(Object):
         self.hp -= 1
         if self.hp == 0:
             self.sceneManager.removeEnemy(self)
+            self.destroySound.stop()
+            self.destroySound.play()
 
     def shootBullet(self):
         bullet = EnemyBullet(self.spriteGroup, self.x, self.y, self.shootAngle, self.shootAngleRate, self.shootSpeed,self.shootSpeedRate, self.bulletImg)
