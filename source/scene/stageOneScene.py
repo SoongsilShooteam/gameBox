@@ -126,9 +126,13 @@ class StageOneScene():
         (x, y) = enemyGenInfo[2], enemyGenInfo[3]
 
         if enemyGenInfo[1] == 0:
-            self.addEnemy(enemy.NormalEnemy(self.allSprites, x, y))
+            e = enemy.NormalEnemy(self.allSprites, x, y)
+            e.onEnemyDead = lambda: print("적뒤짐")
+            self.addEnemy(e)
         elif enemyGenInfo[1] == 1:
-            self.addEnemy(enemy.NWayBentSpiralEnemy(self.allSprites, x, y, 3))
+            boss = enemy.NWayBentSpiralEnemy(self.allSprites, x, y, 3)
+            boss.onEnemyDead = lambda: print("보스뒤짐")
+            self.addEnemy(boss)
 
     def render(self):
         self.allSprites.draw(self.screen)  # allSprites의 등록된 모든 객체를 화면에 그림.

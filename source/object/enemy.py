@@ -117,6 +117,7 @@ class Enemy(Object):
         self.sceneManager = sceneManager.SceneManager()
         self.player = self.sceneManager.getPlayer()
         self.bulletImg = bulletImg
+        self.onEnemyDead = None
         super().__init__(x, y, img)
 
         spriteGroup.add(self)
@@ -141,6 +142,8 @@ class Enemy(Object):
         self.hp -= 1
         if self.hp == 0:
             self.sceneManager.removeEnemy(self)
+            if self.onEnemyDead is not None:
+                self.onEnemyDead()
 
     def shootBullet(self):
         bullet = EnemyBullet(self.spriteGroup, self.x, self.y, self.shootAngle, self.shootAngleRate, self.shootSpeed,self.shootSpeedRate, self.bulletImg)
