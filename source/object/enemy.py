@@ -135,6 +135,7 @@ class Enemy(Object):
     def checkDestroyMe(self):
         if self.y > self.screenSize[1] + 50:
             self.kill()
+            self.sceneManager.removeEnemy(self)
 
     def onHitPlayerBullet(self):
         self.hp -= 1
