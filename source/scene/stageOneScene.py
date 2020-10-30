@@ -30,7 +30,7 @@ class StageOneScene():
         self.enemyList = []
         self.stageStartTime = pygame.time.get_ticks() # 스테이지 시작 시간
         self.gameClear = Object(self.screenX/2, self.screenY/2, "assets/images/gameClear.png")
-        self.genYN = False
+        self.stageClearYn = False
 
         # 일반 적이 출현하는 정보를 적어놓는 리스트
         # Tuple 값 해석
@@ -134,11 +134,21 @@ class StageOneScene():
             self.addEnemy(e)
         elif enemyGenInfo[1] == 1:
             boss = enemy.NWayBentSpiralEnemy(self.allSprites, x, y, 3)
-            boss.onEnemyDead = lambda: print("보스뒤짐")
+            boss.onEnemyDead = self.stageClear
             self.addEnemy(boss)
+
+    def stageClear(self):
+        self.stageClearYn = True
+
+        for enemy in self.enemyList:
+            enemy.kill()
+        self.enemyGenInfoList = []
+        self.enemyList = []
+        return True
 
     def render(self):
         self.allSprites.draw(self.screen)  # allSprites의 등록된 모든 객체를 화면에 그림.
 
-        if len(self.enemyGenInfoList) == 0 and len(self.enemyList) == 0:
+        #if len(self.enemyGenInfoList) == 0 and len(self.enemyList) == 0:
+        if self.stageClearYn is True:
             self.gameClear.render(self.screen)
