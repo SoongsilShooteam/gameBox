@@ -29,6 +29,8 @@ class StageOneScene():
         self.screenX, self.screenY = pygame.display.get_surface().get_size()
         self.enemyList = []
         self.stageStartTime = pygame.time.get_ticks() # 스테이지 시작 시간
+        self.gameClear = Object(self.screenX/2, self.screenY/2, "assets/images/gameClear.png")
+        self.genYN = False
 
         # 일반 적이 출현하는 정보를 적어놓는 리스트
         # Tuple 값 해석
@@ -122,6 +124,7 @@ class StageOneScene():
             else:
                 break
 
+
     def generateEnemyByInfo(self, enemyGenInfo):
         (x, y) = enemyGenInfo[2], enemyGenInfo[3]
 
@@ -132,3 +135,6 @@ class StageOneScene():
 
     def render(self):
         self.allSprites.draw(self.screen)  # allSprites의 등록된 모든 객체를 화면에 그림.
+
+        if len(self.enemyGenInfoList) == 0 and len(self.enemyList) == 0:
+            self.gameClear.render(self.screen)
