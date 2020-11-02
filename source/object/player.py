@@ -35,7 +35,7 @@ class Player(Object):
         self.rect.center = (self.x, self.y)
 
         for i in range(self.hp) :
-            self.spriteGroup.add(Player_Hp_Bar(i*30+30, 770))
+            self.spriteGroup.add(PlayerHpBar(i*30+30, 770))
 
         if key[pygame.K_LEFT]:
             if (self.x - self.speed) > 0:
@@ -60,7 +60,7 @@ class Player(Object):
                 #self.gunSound.stop()
                 #self.gunSound.play()
                 print("key")
-                self.spriteGroup.add(Player_Bullet(self.x, self.y))
+                self.spriteGroup.add(PlayerBullet(self.x, self.y))
                 self.lastTime = currentTime
 
     def onHitEnemyBullet(self):
@@ -69,7 +69,7 @@ class Player(Object):
             self.kill()
             self.sceneManager.setScene(gameOverScene.GameOverScene(self.screen))
 
-class Player_Hp_Bar(Object) :
+class PlayerHpBar(Object) :
     def __init__(self, x, y):
         super().__init__(x, y, "assets/images/player.png")
         self.image = pygame.transform.scale(self.image, (30, 30))
@@ -86,7 +86,7 @@ class Player_Hp_Bar(Object) :
     def minusHp(self):
         self.kill()
 
-class Player_Bullet(Object):
+class PlayerBullet(Object):
     def __init__(self, x, y):
         super().__init__(x, y, "assets/images/player_bullet.png")
         self.speed = 10
