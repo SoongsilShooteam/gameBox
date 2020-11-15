@@ -7,7 +7,7 @@ class OptionsScene():
     def __init__(self, screen):
         print("********** Init OptionsScene **********")
         self.img = 'assets/images/buttonOptions.png'
-        self.image = pygame.transform.scale(pygame.image.load(self.img), (400, 200))
+        self.image = pygame.transform.scale(pygame.image.load(self.img), (480, 200))
         self.rect = self.image.get_rect()
         self.x = self.image.get_width()
         self.y = self.image.get_height()
