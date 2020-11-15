@@ -21,7 +21,7 @@ class BackgroundSprite(Object):
             self.rect.top = -800
 
 class StageOneScene():
-    def __init__(self, screen):
+    def __init__(self, screen, gameLevel=1):
         print("********** Init StageOneScene **********")
         self.allSprites = pygame.sprite.Group() #allSprites 객체 생성
         self.now = "stageOne"
@@ -31,6 +31,7 @@ class StageOneScene():
         self.stageStartTime = pygame.time.get_ticks() # 스테이지 시작 시간
         self.gameClear = Object(self.screenX/2, self.screenY/2, "assets/images/gameClear.png")
         self.stageClearYn = False
+        self.gameLevel = gameLevel
 
         # 일반 적이 출현하는 정보를 적어놓는 리스트
         # Tuple 값 해석

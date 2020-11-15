@@ -17,6 +17,7 @@ class SceneManager:
         print("********** Init SceneManager **********")
         self.nextScene = None
         self.currentScene = None
+        self.gameLevel = 1
 
     def process(self, events):   #필요성 검토 중
         pass
@@ -34,6 +35,7 @@ class SceneManager:
         #screen.blit(self.image, self.rect)
 
     def setScene(self, scene):
+        #self.screen.fill((0, 0, 0))
         self.nextScene = scene
 
     def addEnemy(self, enemy):

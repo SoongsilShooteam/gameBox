@@ -107,7 +107,7 @@ class Enemy(Object):
     def __init__(self, spriteGroup, hp, moveSpeed, x, y, img, bulletImg):
         self.spriteGroup = spriteGroup
         self.screenSize = pygame.display.get_surface().get_size()
-        self.hp = hp # 적의 체력
+        #self.hp = hp # 적의 체력
         self.moveSpeed = moveSpeed # 적의 이동 속도
         self.lastTime = 0.00
         self.shootAngle = 0.0
@@ -116,6 +116,7 @@ class Enemy(Object):
         self.shootSpeedRate = 0.0
         self.shootInterval = 0.1 # N초마다 총알 쏘기
         self.sceneManager = sceneManager.SceneManager()
+        self.hp = self.sceneManager.gameLevel  # 적의 체력
         self.player = self.sceneManager.getPlayer()
         self.bulletImg = bulletImg
         self.onEnemyDead = None
@@ -214,7 +215,7 @@ class NWayBentSpiralEnemy(Enemy):
 # 유저가 있는 방향으로 탄을 발사하는 적
 class NormalEnemy(Enemy):
     def __init__(self, spriteGroup, x, y):
-        super().__init__(spriteGroup, 1, 0, x, y, "assets/images/enemy01.png", "assets/images/enemy_bullet.png")
+        super().__init__(spriteGroup, 3, 0, x, y, "assets/images/enemy01.png", "assets/images/enemy_bullet.png")
         self.speed = random.randrange(2, 5)
         self.shootInterval = 1.0
 

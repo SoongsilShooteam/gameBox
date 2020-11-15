@@ -1,4 +1,4 @@
-from source.scene import stageOneScene, sceneManager, howToPlayScene
+from source.scene import stageOneScene, sceneManager, optionsScene
 from pygame import mixer as Mixer
 from source.object.object import Object
 import pygame
@@ -21,7 +21,7 @@ class TitleScene:
         self.sceneManager = sceneManager.SceneManager()
         self.screen = screen
         self.buttonImage1 = "assets/images/buttonPlay.png"
-        self.buttonImage2 = "assets/images/buttonHowToPlay.png"
+        self.buttonImage2 = "assets/images/buttonOptions.png"
         self.buttonImage3 = "assets/images/buttonQuit.png"
         self.menu = ["Play", "HowToPlay", "Quit"]
         for i in range(3):
@@ -57,7 +57,7 @@ class TitleScene:
                     self.menu[i] = (Object(0, 0, self.buttonImage1))
             elif i == 1:
                 if 57 < self.mousePos[0] < 423 and 515 < self.mousePos[1] < 585:
-                    self.menu[i] = (Object(0, 0, "assets/images/buttonHowToPlayHover.png"))
+                    self.menu[i] = (Object(0, 0, "assets/images/buttonOptionsHover.png"))
                 else:
                     self.menu[i] = (Object(0, 0, self.buttonImage2))
             else:
@@ -70,10 +70,10 @@ class TitleScene:
             self.menu[i].update()
 
         if 155 < self.mousePos[0] < 325 and 405 < self.mousePos[1] < 475 and click[0] == 1:
-            self.sceneManager.setScene(stageOneScene.StageOneScene(self.screen))
+            self.sceneManager.setScene(stageOneScene.StageOneScene(self.screen, self.sceneManager.gameLevel))
 
         if 57 < self.mousePos[0] < 423 and 515 < self.mousePos[1] < 585 and click[0] == 1:
-            self.sceneManager.setScene(howToPlayScene.HowToPlayScene(self.screen))
+            self.sceneManager.setScene(optionsScene.OptionsScene(self.screen))
 
         if 173 < self.mousePos[0] < 307 and 625 < self.mousePos[1] < 695 and click[0] == 1:
             exit()

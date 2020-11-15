@@ -9,7 +9,7 @@ pygame.init()
 size = [480, 800]
 screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
-pygame.display.set_caption("TEST")
+pygame.display.set_caption("Space Shooter")
 isRun = True
 isPlay = False
 

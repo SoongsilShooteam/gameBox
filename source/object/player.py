@@ -24,8 +24,8 @@ class Player(Object):
         self.shootInterval = 0.1
         self.hp = 5
         spriteGroup.add(self)
-        #Mixer.init()
-        #self.gunSound = Mixer.Sound('assets/sounds/gun.mp3')
+        Mixer.init()
+        self.gunSound = Mixer.Sound('assets/sounds/gun.mp3')
 
     def update(self):
         super().update()
@@ -57,8 +57,8 @@ class Player(Object):
             currentTime = pygame.time.get_ticks()
 
             if (currentTime - self.lastTime) / 1000.0 >= self.shootInterval:
-                #self.gunSound.stop()
-                #self.gunSound.play()
+                self.gunSound.stop()
+                self.gunSound.play()
                 print("key")
                 self.spriteGroup.add(PlayerBullet(self.x, self.y))
                 self.lastTime = currentTime
