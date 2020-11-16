@@ -5,10 +5,6 @@ from source.object.object import Object
 import pygame
 import random
 
-class StageOneNormalEnemy(enemy.NormalEnemy):
-    def update(self):
-        super().update()
-
 class BackgroundSprite(Object):
     def __init__(self):
         super().__init__(0, 0, "assets/images/stageOne.png")
