@@ -67,6 +67,12 @@ class Player(Object):
 
     def onHitEnemyBullet(self):
         self.hp -= 1
+        self.sceneManager.score -= 100
+        if self.sceneManager.score <= 0:
+            self.sceneManager.score = 0
+            print(self.sceneManager.score)
+        else:
+            print(self.sceneManager.score)
         self.playerHpBarList[self.hp].kill()
         if self.hp == 0:
             self.kill()
