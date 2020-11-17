@@ -60,7 +60,7 @@ class Player(Object):
                 self.gunSound.stop()
                 self.gunSound.play()
                 print("key")
-                self.spriteGroup.add(PlayerBullet(self.x, self.y))
+                self.spriteGroup.add(PlayerBullet(self.x, self.y - 25))
                 self.lastTime = currentTime
 
     def onHitEnemyBullet(self):
@@ -68,6 +68,7 @@ class Player(Object):
         if self.hp == 0:
             self.kill()
             self.sceneManager.setScene(gameOverScene.GameOverScene(self.screen))
+
 
 class PlayerHpBar(Object) :
     def __init__(self, x, y):
