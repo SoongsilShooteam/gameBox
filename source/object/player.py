@@ -23,19 +23,21 @@ class Player(Object):
         self.lastTime = 0.00
         self.shootInterval = 0.1
         self.hp = 5
+        self.playerHpBarList = []
+
+        for i in range(self.hp) :
+            self.playerHpBarList.append(PlayerHpBar(i*30+30, 770))
+            self.spriteGroup.add(self.playerHpBarList[i])
+
         spriteGroup.add(self)
         Mixer.init()
         self.gunSound = Mixer.Sound('assets/sounds/gun.mp3')
 
+
+
     def update(self):
         super().update()
         key = pygame.key.get_pressed()
-
-        self.rect = self.image.get_rect()
-        self.rect.center = (self.x, self.y)
-
-        for i in range(self.hp) :
-            self.spriteGroup.add(PlayerHpBar(i*30+30, 770))
 
         if key[pygame.K_LEFT]:
             if (self.x - self.speed) > 0:
@@ -65,6 +67,7 @@ class Player(Object):
 
     def onHitEnemyBullet(self):
         self.hp -= 1
+        self.playerHpBarList[self.hp].kill()
         if self.hp == 0:
             self.kill()
             self.sceneManager.setScene(gameOverScene.GameOverScene(self.screen))
@@ -79,13 +82,6 @@ class PlayerHpBar(Object) :
         super().update()
         key = pygame.key.get_pressed()
 
-        self.rect = self.image.get_rect()
-        self.rect.center = (self.x, self.y)
-
-        self.minusHp()
-
-    def minusHp(self):
-        self.kill()
 
 class PlayerBullet(Object):
     def __init__(self, x, y):
@@ -97,9 +93,6 @@ class PlayerBullet(Object):
     def update(self):
         super().update()
         key = pygame.key.get_pressed()
-
-        self.rect = self.image.get_rect()
-        self.rect.center = (self.x, self.y)
 
         self.checkDestroyMe()
         self.checkPlayerCollision()
