@@ -18,6 +18,8 @@ class SceneManager:
         self.nextScene = None
         self.currentScene = None
         self.gameLevel = 1
+        self.score = 0
+
 
     def process(self, events):   #필요성 검토 중
         pass

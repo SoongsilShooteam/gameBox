@@ -110,6 +110,10 @@ class StageOneScene():
         enemy.kill()
         self.enemyList.remove(enemy)
 
+    def addScore(self):
+        self.sceneManager.score += 50
+        print(self.sceneManager.score)
+
     def update(self):
         self.allSprites.update()  # allSprites의 등록된 모든 객체를 업데이트
 
@@ -123,13 +127,12 @@ class StageOneScene():
             else:
                 break
 
-
     def generateEnemyByInfo(self, enemyGenInfo):
         (x, y) = enemyGenInfo[2], enemyGenInfo[3]
 
         if enemyGenInfo[1] == 0:
             e = enemy.NormalEnemy(self.allSprites, x, y)
-            e.onEnemyDead = lambda: print("적뒤짐")
+            e.onEnemyDead = lambda : self.addScore()
             self.addEnemy(e)
         elif enemyGenInfo[1] == 1:
             boss = enemy.NWayBentSpiralEnemy(self.allSprites, x, y, 3)
@@ -138,7 +141,8 @@ class StageOneScene():
 
     def stageClear(self):
         self.stageClearYn = True
-
+        self.sceneManager.score += 200
+        print(self.sceneManager.score)
         for enemy in self.enemyList:
             enemy.kill()
         self.enemyGenInfoList = []

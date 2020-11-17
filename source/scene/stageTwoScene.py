@@ -2,6 +2,7 @@ from pygame import mixer as Mixer
 from source.object import enemy
 from source.object import player
 from source.object.object import Object
+from source.scene import sceneManager
 import pygame
 import random
 
@@ -28,6 +29,7 @@ class StageTwoScene():
         self.gameClear = Object(self.screenX/2, self.screenY/2, "assets/images/gameClear.png")
         self.stageClearYn = False
         self.gameLevel = gameLevel
+        self.sceneManager = sceneManager.SceneManager()
 
         # 일반 적이 출현하는 정보를 적어놓는 리스트
         # Tuple 값 해석
@@ -65,6 +67,10 @@ class StageTwoScene():
         enemy.kill()
         self.enemyList.remove(enemy)
 
+    def addScore(self):
+        self.sceneManager.score += 50
+        print(self.sceneManager.score)
+
     def update(self):
         self.allSprites.update()
 
@@ -97,6 +103,9 @@ class StageTwoScene():
 
     def stageClear(self):
         self.stageClearYn = True
+
+        self.sceneManager.score += 200
+        print(self.sceneManager.score)
 
         for enemy in self.enemyList:
             enemy.kill()
