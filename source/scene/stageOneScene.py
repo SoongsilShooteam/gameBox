@@ -1,4 +1,5 @@
 from pygame import mixer as Mixer
+from source.scene import stageTwoScene, sceneManager
 from source.object import enemy
 from source.object import player
 from source.object.object import Object
@@ -32,6 +33,7 @@ class StageOneScene():
         self.gameClear = Object(self.screenX/2, self.screenY/2, "assets/images/gameClear.png")
         self.stageClearYn = False
         self.gameLevel = gameLevel
+        self.sceneManager = sceneManager.SceneManager()
 
         # 일반 적이 출현하는 정보를 적어놓는 리스트
         # Tuple 값 해석
@@ -152,4 +154,4 @@ class StageOneScene():
 
         #if len(self.enemyGenInfoList) == 0 and len(self.enemyList) == 0:
         if self.stageClearYn is True:
-            self.gameClear.render(self.screen)
+            self.sceneManager.setScene(stageTwoScene.StageTwoScene(self.screen, self.gameLevel + 1))
