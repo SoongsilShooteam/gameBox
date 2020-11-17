@@ -127,6 +127,9 @@ class StageOneScene():
             else:
                 break
 
+
+
+
     def generateEnemyByInfo(self, enemyGenInfo):
         (x, y) = enemyGenInfo[2], enemyGenInfo[3]
 
@@ -153,5 +156,8 @@ class StageOneScene():
         self.allSprites.draw(self.screen)  # allSprites의 등록된 모든 객체를 화면에 그림.
 
         #if len(self.enemyGenInfoList) == 0 and len(self.enemyList) == 0:
-        if self.stageClearYn is True:
-            self.sceneManager.setScene(stageTwoScene.StageTwoScene(self.screen, self.gameLevel + 1))
+        if self.stageClearYn is True :
+            self.player.x = self.screen.get_width() / 2
+            self.player.y -= 6
+            if self.player.y <= 0:
+                self.sceneManager.setScene(stageTwoScene.StageTwoScene(self.screen, self.gameLevel + 1))
