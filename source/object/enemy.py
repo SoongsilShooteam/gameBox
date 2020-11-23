@@ -164,17 +164,7 @@ class Enemy(Object):
         bullet.update()
         self.spriteGroup.add(bullet)
 
-# 선회가속 소용돌이 탄을 발사하는 적
-class BentSpiralEnemy(Enemy):
-    def __init__(self, spriteGroup, x, y):
-        super().__init__(spriteGroup, 100, 0, x, y, "assets/images/enemy01.png", "assets/images/enemy_bullet.png")
-        self.shootAngleRate = 10
-
-    def update(self):
-        super().update()
-
-# 다중 선회가속 소용돌이 탄을 발사하는 적 2
-class NWayBentSpiralEnemy(Enemy):
+class StageOneBossEnemy(Enemy):
     def __init__(self, spriteGroup, x, y, n):
         super().__init__(spriteGroup, 100, 0, x, y, "assets/images/boss01.png", "assets/images/boss_bullet.png")
         self.image = pygame.transform.scale(self.image, (140, 100))
@@ -217,18 +207,13 @@ class NWayBentSpiralEnemy(Enemy):
             self.shootAngle = prevShootAngle
             self.lastTime2 = currentTime
 
-
-# 양방향 소용돌이 탄을 발사하는 적
-class BiDirectionalSpiralEnemy(Enemy):
-    shootAngle2 = 0.0
-    shootAngleRate2 = 0.0
-    shootCount = 0.0
-
+class StageTwoBossEnemy(Enemy):
     def __init__(self, spriteGroup, x, y):
         super().__init__(spriteGroup, 100, 0, x, y, "assets/images/boss01.png", "assets/images/boss_bullet.png")
         self.image = pygame.transform.scale(self.image, (140, 100))
         self.lastTime2 = currentTime = pygame.time.get_ticks()
         self.shootAngle2 = 0.0
+        self.shootAngle3 = 0.0
         self.shootAngleRate = 10.0
         self.shootAngleRate2 = -10.0
         self.hp = 100
@@ -261,6 +246,57 @@ class BiDirectionalSpiralEnemy(Enemy):
                 self.generateBullet(self.shootAngle2 + 90 * i, 0.0, self.shootSpeed, 0.0)
         self.shootAngle += self.shootAngleRate
         self.shootAngle2 += self.shootAngleRate2
+        self.shootAngle3 += self.shootAngleRate / 1.5
+
+
+# 양방향 소용돌이 탄을 발사하는 적
+class StageThreeBossEnemy(Enemy):
+    shootAngle2 = 0.0
+    shootAngleRate2 = 0.0
+    shootCount = 0.0
+
+    def __init__(self, spriteGroup, x, y):
+        super().__init__(spriteGroup, 100, 0, x, y, "assets/images/boss01.png", "assets/images/boss_bullet.png")
+        self.image = pygame.transform.scale(self.image, (140, 100))
+        self.lastTime2 = currentTime = pygame.time.get_ticks()
+        self.shootAngle2 = 0.0
+        self.shootAngle3 = 0.0
+        self.shootAngleRate = 10.0
+        self.shootAngleRate2 = -10.0
+        self.shootInterval = 0.025
+        self.hp = 100
+        self.shootCount = 4
+        self.bossEnemyHpBar = BossEnemyHpBar(spriteGroup, self)
+
+    def update(self):
+        super().update()
+
+        if self.y < 130:
+            self.y += 1.0
+
+        if self.bossEnemyHpBar is not None:
+            self.bossEnemyHpBar.update()
+
+    def onHitPlayerBullet(self):
+        super().onHitPlayerBullet()
+
+        if self.hp <= 0:
+            del self.bossEnemyHpBar
+            self.bossEnemyHpBar = None
+
+    def shootBullet(self):
+        for i in range(0, 4):
+            self.generateBullet(90 * i + self.shootAngle3, 0.0, self.shootSpeed, 0.0)
+            self.generateBullet(90 * i + self.shootAngle3, 0.0, self.shootSpeed, 0.0)
+            self.generateBullet(90 * i + self.shootAngle3, 0.0, self.shootSpeed, 0.0)
+            self.generateBullet(90 * i + self.shootAngle3, 0.0, self.shootSpeed, 0.0)
+
+            self.generateBullet(self.shootAngle + 90 * i, 0.0, self.shootSpeed, 0.0)
+            self.generateBullet(self.shootAngle2 + 90 * i, 0.0, self.shootSpeed, 0.0)
+        self.shootAngle += self.shootAngleRate
+        self.shootAngle2 += self.shootAngleRate2
+        self.shootAngle3 += self.shootAngleRate / 1.5
+
 
 # 유저가 있는 방향으로 탄을 발사하는 적
 class NormalEnemy(Enemy):
