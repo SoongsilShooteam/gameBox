@@ -97,7 +97,7 @@ class StageTwoScene():
             e = enemy.NormalEnemy3(self.allSprites, x, y)
             self.addEnemy(e)
         elif enemyGenInfo[1] == 3:
-            boss = enemy.BiDirectionalSpiralEnemy(self.allSprites, x, y)
+            boss = enemy.StageTwoBossEnemy(self.allSprites, x, y)
             boss.onEnemyDead = self.stageClear
             self.addEnemy(boss)
 

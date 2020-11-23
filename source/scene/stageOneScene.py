@@ -138,7 +138,7 @@ class StageOneScene():
             e.onEnemyDead = lambda : self.addScore()
             self.addEnemy(e)
         elif enemyGenInfo[1] == 1:
-            boss = enemy.NWayBentSpiralEnemy(self.allSprites, x, y, 3)
+            boss = enemy.StageOneBossEnemy(self.allSprites, x, y, 3)
             boss.onEnemyDead = self.stageClear
             self.addEnemy(boss)
 
