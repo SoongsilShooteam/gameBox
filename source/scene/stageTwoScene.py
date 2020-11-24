@@ -122,12 +122,15 @@ class StageTwoScene():
         if enemyGenInfo[1] == 0:
             e = enemy.NormalEnemy(self.allSprites, x, y)
             self.addEnemy(e)
+            e.onEnemyDead = lambda : self.addScore()
         elif enemyGenInfo[1] == 1:
             e = enemy.NormalEnemy2(self.allSprites, x, y)
             self.addEnemy(e)
+            e.onEnemyDead = lambda : self.addScore()
         elif enemyGenInfo[1] == 2:
             e = enemy.NormalEnemy3(self.allSprites, x, y)
             self.addEnemy(e)
+            e.onEnemyDead = lambda : self.addScore()
         elif enemyGenInfo[1] == 3:
             boss = enemy.StageTwoBossEnemy(self.allSprites, x, y)
             boss.onEnemyDead = self.stageClear
