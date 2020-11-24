@@ -76,7 +76,6 @@ class Player(Object):
         self.playerHpBarList[self.hp].kill()
         if self.hp == 0:
             self.kill()
-            self.sceneManager.score = 0
             self.sceneManager.setScene(gameOverScene.GameOverScene(self.screen))
 
 
