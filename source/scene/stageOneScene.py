@@ -75,17 +75,6 @@ class StageOneScene():
             (55.0, 0, random.randrange(50.0, self.screenX - 50.0), -15.0),
             (56.0, 0, random.randrange(50.0, self.screenX - 50.0), -15.0),
             (56.0, 1, self.screenX / 2.0, -15.0),
-            (60.0, 0, random.randrange(50.0, self.screenX - 50.0), -15.0),
-            (65.0, 0, random.randrange(50.0, self.screenX - 50.0), -15.0),
-            (67.0, 0, random.randrange(50.0, self.screenX - 50.0), -15.0),
-            (70.0, 0, random.randrange(50.0, self.screenX - 50.0), -15.0),
-            (75.0, 0, random.randrange(50.0, self.screenX - 50.0), -15.0),
-            (75.0, 0, random.randrange(50.0, self.screenX - 50.0), -15.0),
-            (78.0, 0, random.randrange(50.0, self.screenX - 50.0), -15.0),
-            (80.0, 0, random.randrange(50.0, self.screenX - 50.0), -15.0),
-            (86.0, 0, random.randrange(50.0, self.screenX - 50.0), -15.0),
-            (88.0, 0, random.randrange(50.0, self.screenX - 50.0), -15.0),
-            (90.0, 0, random.randrange(50.0, self.screenX - 50.0), -15.0),
         ]
 
         self.initializeBackground()
