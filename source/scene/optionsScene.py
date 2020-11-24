@@ -24,7 +24,11 @@ class OptionsScene():
         self.buttonImage2 = "assets/images/buttonOptionsNormal.png"
         self.buttonImage3 = "assets/images/buttonOptionsHard.png"
         self.buttonImage4 = "assets/images/buttonQuit.png"
+        self.selectOptionImage = "assets/images/bullet01.png"
         self.menu = ["Easy", "Normal", "Hard", "Quit"]
+
+        self.selectOption = (Object(0,0, self.selectOptionImage))
+        #self.selectOption = pygame.transform.scale(pygame.image.load(self.img), (480, 200))
 
         for i in range(4):
             if i == 0:
@@ -51,18 +55,29 @@ class OptionsScene():
         self.mousePos = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
+        if self.sceneManager.gameLevel == 1 :
+            self.selectOption.x = self.menu[0].x + 150
+            self.selectOption.y = self.menu[0].y
+        elif  self.sceneManager.gameLevel == 2 :
+            self.selectOption.x = self.menu[1].x + 150
+            self.selectOption.y = self.menu[1].y
+        elif  self.sceneManager.gameLevel == 3 :
+            self.selectOption.x = self.menu[2].x + 150
+            self.selectOption.y = self.menu[2].y
+        self.selectOption.update()
+
         for i in range(4):
             if i == 0:
                 if 155 < self.mousePos[0] < 325 and 260 < self.mousePos[1] < 310 :
-                    self.menu[i] = (Object(0, 0, "assets/images/buttonOptionsEasy.png"))
+                    self.menu[i] = (Object(0, 0, "assets/images/buttonOptionsEasyHover.png"))
 
                     if click[0] == 1:
-                        self.sceneManager.gameLevel = 2
+                        self.sceneManager.gameLevel = 1
                 else:
                     self.menu[i] = (Object(0, 0, self.buttonImage1))
             elif i == 1:
                 if 57 < self.mousePos[0] < 423 and 370 < self.mousePos[1] < 420:
-                    self.menu[i] = (Object(0, 0, "assets/images/buttonOptionsNormal.png"))
+                    self.menu[i] = (Object(0, 0, "assets/images/buttonOptionsNormalHover.png"))
 
                     if click[0] == 1:
                         self.sceneManager.gameLevel = 2
@@ -70,7 +85,7 @@ class OptionsScene():
                     self.menu[i] = (Object(0, 0, self.buttonImage2))
             elif i == 2:
                 if 173 < self.mousePos[0] < 307 and 480 < self.mousePos[1] < 530:
-                    self.menu[i] = (Object(0, 0, "assets/images/buttonOptionsHard.png"))
+                    self.menu[i] = (Object(0, 0, "assets/images/buttonOptionsHardHover.png"))
 
                     if click[0] == 1:
                         self.sceneManager.gameLevel = 3
@@ -104,6 +119,7 @@ class OptionsScene():
     def render(self):
         self.screen.fill((0, 0, 0))
         self.screen.blit(self.image, self.rect)
+        self.selectOption.render(self.screen)
         # self.menu.render(self.screen)
         for i in range(4):
             self.menu[i].render(self.screen)
