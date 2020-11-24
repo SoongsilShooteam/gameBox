@@ -116,6 +116,7 @@ class Enemy(Object):
         self.shootSpeedRate = 0.0
         self.shootInterval = 0.1 # N초마다 총알 쏘기
         self.sceneManager = sceneManager.SceneManager()
+        self.gameLevel = self.sceneManager.gameLevel
         self.hp = self.sceneManager.gameLevel  # 적의 체력
         self.player = self.sceneManager.getPlayer()
         self.bulletImg = bulletImg
@@ -169,6 +170,7 @@ class StageOneBossEnemy(Enemy):
         super().__init__(spriteGroup, 100, 0, x, y, "assets/images/boss01.png", "assets/images/boss_bullet.png")
         self.image = pygame.transform.scale(self.image, (140, 100))
         self.n = n
+        self.hp = 100
         self.lastTime2 = currentTime = pygame.time.get_ticks()
         self.bossEnemyHpBar = BossEnemyHpBar(spriteGroup, self)
 
@@ -301,7 +303,7 @@ class StageThreeBossEnemy(Enemy):
 # 유저가 있는 방향으로 탄을 발사하는 적
 class NormalEnemy(Enemy):
     def __init__(self, spriteGroup, x, y):
-        super().__init__(spriteGroup, 3, 0, x, y, "assets/images/enemy01.png", "assets/images/enemy_bullet.png")
+        super().__init__(spriteGroup, 0, 0, x, y, "assets/images/enemy01.png", "assets/images/enemy_bullet.png")
         self.speed = random.randrange(2, 5)
         self.shootInterval = 1.0
 
@@ -318,7 +320,7 @@ class NormalEnemy(Enemy):
 
 class NormalEnemy2(Enemy):
     def __init__(self, spriteGroup, x, y):
-        super().__init__(spriteGroup, 3, 0, x, y, "assets/images/enemy01.png", "assets/images/enemy_bullet.png")
+        super().__init__(spriteGroup, 0, 0, x, y, "assets/images/enemy01.png", "assets/images/enemy_bullet.png")
         self.speed = random.randrange(2, 5)
         self.shootInterval = 1.0
 

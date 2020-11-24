@@ -2,7 +2,7 @@ from pygame import mixer as Mixer
 from source.object import enemy
 from source.object import player
 from source.object.object import Object
-from source.scene import sceneManager, stageThreeScene
+from source.scene import sceneManager
 import pygame
 import random
 
@@ -17,11 +17,11 @@ class BackgroundSprite(Object):
         if self.rect.top == 1:  # 백그라운드가 일정 y좌표가 되면 원래의 위치로 되돌려준다.
             self.rect.top = -800
 
-class StageTwoScene():
+class StageThreeScene():
     def __init__(self, screen, gameLevel=1):
         print("********** Init StageTwoScene **********")
         self.allSprites = pygame.sprite.Group() #allSprites 객체 생성
-        self.now = "stageTwo"
+        self.now = "stageThree"
         self.screen = screen
         self.screenX, self.screenY = pygame.display.get_surface().get_size()
         self.enemyList = []
@@ -67,6 +67,14 @@ class StageTwoScene():
             (45.0, random.randrange(0, 3), random.randrange(50.0, self.screenX - 50.0), -15.0),
             (46.0, random.randrange(0, 3), random.randrange(50.0, self.screenX - 50.0), -15.0),
             (50.0, 3, self.screenX / 2.0, -15.0),
+            (52.0, random.randrange(0, 3), random.randrange(50.0, self.screenX - 50.0), -15.0),
+            (61.0, random.randrange(0, 3), random.randrange(50.0, self.screenX - 50.0), -15.0),
+            (64.0, random.randrange(0, 3), random.randrange(50.0, self.screenX - 50.0), -15.0),
+            (67.0, random.randrange(0, 3), random.randrange(50.0, self.screenX - 50.0), -15.0),
+            (76.0, random.randrange(0, 3), random.randrange(50.0, self.screenX - 50.0), -15.0),
+            (79.0, random.randrange(0, 3), random.randrange(50.0, self.screenX - 50.0), -15.0),
+            (88.0, random.randrange(0, 3), random.randrange(50.0, self.screenX - 50.0), -15.0),
+            (91.0, random.randrange(0, 3), random.randrange(50.0, self.screenX - 50.0), -15.0),
         ]
 
         self.initializeBackground()
@@ -141,7 +149,4 @@ class StageTwoScene():
         self.allSprites.draw(self.screen)
 
         if self.stageClearYn is True:
-            self.player.x = self.screen.get_width() / 2
-            self.player.y -= 6
-            if self.player.y <= 0:
-                self.sceneManager.setScene(stageThreeScene.StageThreeScene(self.screen, self.gameLevel + 1))
+            self.gameClear.render(self.screen)

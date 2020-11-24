@@ -116,9 +116,6 @@ class StageOneScene():
             else:
                 break
 
-
-
-
     def generateEnemyByInfo(self, enemyGenInfo):
         (x, y) = enemyGenInfo[2], enemyGenInfo[3]
 
@@ -143,6 +140,9 @@ class StageOneScene():
 
     def render(self):
         self.allSprites.draw(self.screen)  # allSprites의 등록된 모든 객체를 화면에 그림.
+
+        self.sceneManager.viewScore(self.screen, self.sceneManager.score, 30, self.screenX / 3, 10)
+
 
         #if len(self.enemyGenInfoList) == 0 and len(self.enemyList) == 0:
         if self.stageClearYn is True :
