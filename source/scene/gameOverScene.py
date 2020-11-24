@@ -32,6 +32,9 @@ class GameOverScene():
         click = pygame.mouse.get_pressed()
         if click[0] == 1:
             self.sceneManager.setScene(titleScene.TitleScene(self.screen))
+            self.sceneManager.score = 0
 
     def render(self):
         self.screen.blit(self.image, self.rect)
+
+        self.sceneManager.finalScore(self.screen, self.sceneManager.score, 30, self.x / 3, self.y / 1.5)

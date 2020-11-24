@@ -143,7 +143,6 @@ class StageOneScene():
 
         self.sceneManager.viewScore(self.screen, self.sceneManager.score, 30, self.screenX / 3, 10)
 
-
         #if len(self.enemyGenInfoList) == 0 and len(self.enemyList) == 0:
         if self.stageClearYn is True :
             self.player.x = self.screen.get_width() / 2
