@@ -53,6 +53,50 @@ class BossEnemyHpBar:
     def lerp(self, fromValue, toValue, t):
         return fromValue + (toValue - fromValue) * t
 
+class StageThreeBossEnemyHpBar:
+    def __init__(self, spriteGroup, enemy):
+        self.enemy = enemy
+        self.enemyMaxHp = enemy.hp
+        self.enemyPrevHp = enemy.hp
+        self.spriteGroup = spriteGroup
+
+        self.hpGuageBarBg = Object(0, 0, "assets/images/hp_bar_guage2.png")
+        self.hpGuageBar = Object(0, 0, "assets/images/hp_bar_guage.png")
+        self.originalHpGuageBarImage = self.hpGuageBar.image
+        self.hpGuageBarEdge = Object(0, 0, "assets/images/hp_bar_edge.png")
+
+        screenSize = pygame.display.get_surface().get_size()
+        self.hpGuageBarBg.x = screenSize[0] / 2 + 17
+        self.hpGuageBarBg.y = 55
+        self.hpGuageBar.x = screenSize[0] / 2 + 17
+        self.originalHpGuageBarX = self.hpGuageBar.x
+        self.hpGuageBar.y = 55
+        self.hpGuageBarEdge.x = screenSize[0] / 2
+        self.hpGuageBarEdge.y = 55
+
+        self.spriteGroup.add(self.hpGuageBarBg)
+        self.spriteGroup.add(self.hpGuageBar)
+        self.spriteGroup.add(self.hpGuageBarEdge)
+        self.hpGuageBarBg.update()
+        self.hpGuageBar.update()
+        self.hpGuageBarEdge.update()
+
+    def __del__(self):
+        self.spriteGroup.remove(self.hpGuageBarBg)
+        self.spriteGroup.remove(self.hpGuageBar)
+        self.spriteGroup.remove(self.hpGuageBarEdge)
+
+    def update(self):
+        # 적 Hp에 변화가 생겼다면
+        if self.enemyPrevHp is not self.enemy.hp:
+            hpGuageBarWidth = int(self.lerp(self.originalHpGuageBarImage.get_rect().width, 0, 1.0 - self.enemy.hp / self.enemyMaxHp))
+            self.hpGuageBar.image = pygame.transform.scale(self.originalHpGuageBarImage, (hpGuageBarWidth, self.originalHpGuageBarImage.get_rect().height))
+            self.hpGuageBar.x = self.originalHpGuageBarX - (self.originalHpGuageBarImage.get_rect().width - self.hpGuageBar.image.get_rect().width) / 2
+            self.enemyPrevHp = self.enemy.hp
+
+    def lerp(self, fromValue, toValue, t):
+        return fromValue + (toValue - fromValue) * t
+
 # 적이 쏘는 총알
 class EnemyBullet(Object):
     def __init__(self, spriteGroup, x, y, angle, angleRate, speed, speedRate, bulletImg):
@@ -196,7 +240,7 @@ class StageOneBossEnemy(Enemy):
             super().shootBullet()
             self.shootAngle += 360.0 / self.n
 
-        # 유도탄 팔사
+        # 유도탄 발사
         currentTime = pygame.time.get_ticks()
         if (currentTime - self.lastTime2) / 1000.0 >= 1.0:
             prevShootAngle = self.shootAngle
@@ -250,25 +294,24 @@ class StageTwoBossEnemy(Enemy):
         self.shootAngle2 += self.shootAngleRate2
         self.shootAngle3 += self.shootAngleRate / 1.5
 
-
-# 양방향 소용돌이 탄을 발사하는 적
 class StageThreeBossEnemy(Enemy):
     shootAngle2 = 0.0
     shootAngleRate2 = 0.0
     shootCount = 0.0
 
     def __init__(self, spriteGroup, x, y):
-        super().__init__(spriteGroup, 100, 0, x, y, "assets/images/boss01.png", "assets/images/boss_bullet.png")
+        super().__init__(spriteGroup, 100, 0, x, y, "assets/images/boss02.png", "assets/images/boss_bullet.png")
         self.image = pygame.transform.scale(self.image, (140, 100))
         self.lastTime2 = currentTime = pygame.time.get_ticks()
         self.shootAngle2 = 0.0
         self.shootAngle3 = 0.0
+        self.shootAngle4 = 0.0
         self.shootAngleRate = 10.0
         self.shootAngleRate2 = -10.0
         self.shootInterval = 0.025
-        self.hp = 100
+        self.hp = 180 # 이 보스는 체력이 3단계로 이루어져 있음. 190 + 190 + 120.
         self.shootCount = 4
-        self.bossEnemyHpBar = BossEnemyHpBar(spriteGroup, self)
+        self.bossEnemyHpBar = StageThreeBossEnemyHpBar(spriteGroup, self)
 
     def update(self):
         super().update()
@@ -287,18 +330,31 @@ class StageThreeBossEnemy(Enemy):
             self.bossEnemyHpBar = None
 
     def shootBullet(self):
+        if self.hp > 105:
+            self.shootBulletPhase1()
+        elif self.hp > 30:
+            self.shootBulletPhase2()
+        else:
+            self.shootInterval = 0.000 1
+            self.shootBulletPhase2()
+
+    def shootBulletPhase1(self):
+        for i in range(0, 4):
+            self.generateBullet(90 * i + math.sin(self.shootAngle3) * 65, 0.0, self.shootSpeed, 0.0)
+        self.generateBullet(self.shootAngle + 90 * i, 0.0, self.shootSpeed, 0.0)
+        self.generateBullet(self.shootAngle2 + 90 * i, 0.0, self.shootSpeed, 0.0)
+        self.shootAngle += self.shootAngleRate
+        self.shootAngle2 += self.shootAngleRate2
+        self.shootAngle3 += 0.1
+
+    def shootBulletPhase2(self):
         for i in range(0, 4):
             self.generateBullet(90 * i + self.shootAngle3, 0.0, self.shootSpeed, 0.0)
-            self.generateBullet(90 * i + self.shootAngle3, 0.0, self.shootSpeed, 0.0)
-            self.generateBullet(90 * i + self.shootAngle3, 0.0, self.shootSpeed, 0.0)
-            self.generateBullet(90 * i + self.shootAngle3, 0.0, self.shootSpeed, 0.0)
-
             self.generateBullet(self.shootAngle + 90 * i, 0.0, self.shootSpeed, 0.0)
             self.generateBullet(self.shootAngle2 + 90 * i, 0.0, self.shootSpeed, 0.0)
         self.shootAngle += self.shootAngleRate
         self.shootAngle2 += self.shootAngleRate2
         self.shootAngle3 += self.shootAngleRate / 1.5
-
 
 # 유저가 있는 방향으로 탄을 발사하는 적
 class NormalEnemy(Enemy):

@@ -61,7 +61,6 @@ class Player(Object):
             if (currentTime - self.lastTime) / 1000.0 >= self.shootInterval:
                 self.gunSound.stop()
                 self.gunSound.play()
-                print("key")
                 self.spriteGroup.add(PlayerBullet(self.x, self.y - 25))
                 self.lastTime = currentTime
 
@@ -119,6 +118,5 @@ class PlayerBullet(Object):
             v1 = Vector2(enemy.x, enemy.y)
             v2 = Vector2(self.x, self.y)
             if v1.distance(v2) < 25.0:
-                print("Collide_E")
                 self.kill()
                 enemy.onHitPlayerBullet()
