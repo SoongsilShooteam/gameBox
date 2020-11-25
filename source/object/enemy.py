@@ -335,7 +335,7 @@ class StageThreeBossEnemy(Enemy):
         elif self.hp > 30:
             self.shootBulletPhase2()
         else:
-            self.shootInterval = 0.000 1
+            self.shootInterval = 0.001
             self.shootBulletPhase2()
 
     def shootBulletPhase1(self):
