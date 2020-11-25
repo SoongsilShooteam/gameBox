@@ -56,42 +56,64 @@ class BossEnemyHpBar:
 class StageThreeBossEnemyHpBar:
     def __init__(self, spriteGroup, enemy):
         self.enemy = enemy
-        self.enemyMaxHp = enemy.hp
         self.enemyPrevHp = enemy.hp
         self.spriteGroup = spriteGroup
 
         self.hpGuageBarBg = Object(0, 0, "assets/images/hp_bar_guage2.png")
         self.hpGuageBar = Object(0, 0, "assets/images/hp_bar_guage.png")
+        self.hpGuageBar2 = Object(0, 0, "assets/images/hp_bar_guage3.png")
+        self.hpGuageBar3 = Object(0, 0, "assets/images/hp_bar_guage4.png")
         self.originalHpGuageBarImage = self.hpGuageBar.image
+        self.originalHpGuageBar2Image = self.hpGuageBar2.image
+        self.originalHpGuageBar3Image = self.hpGuageBar3.image
         self.hpGuageBarEdge = Object(0, 0, "assets/images/hp_bar_edge.png")
 
         screenSize = pygame.display.get_surface().get_size()
         self.hpGuageBarBg.x = screenSize[0] / 2 + 17
         self.hpGuageBarBg.y = 55
         self.hpGuageBar.x = screenSize[0] / 2 + 17
+        self.hpGuageBar2.x = screenSize[0] / 2 + 17
+        self.hpGuageBar3.x = screenSize[0] / 2 + 17
         self.originalHpGuageBarX = self.hpGuageBar.x
         self.hpGuageBar.y = 55
+        self.hpGuageBar2.y = 55
+        self.hpGuageBar3.y = 55
         self.hpGuageBarEdge.x = screenSize[0] / 2
         self.hpGuageBarEdge.y = 55
 
         self.spriteGroup.add(self.hpGuageBarBg)
         self.spriteGroup.add(self.hpGuageBar)
+        self.spriteGroup.add(self.hpGuageBar2)
+        self.spriteGroup.add(self.hpGuageBar3)
         self.spriteGroup.add(self.hpGuageBarEdge)
         self.hpGuageBarBg.update()
         self.hpGuageBar.update()
+        self.hpGuageBar2.update()
+        self.hpGuageBar3.update()
         self.hpGuageBarEdge.update()
 
     def __del__(self):
         self.spriteGroup.remove(self.hpGuageBarBg)
         self.spriteGroup.remove(self.hpGuageBar)
+        self.spriteGroup.remove(self.hpGuageBar2)
+        self.spriteGroup.remove(self.hpGuageBar3)
         self.spriteGroup.remove(self.hpGuageBarEdge)
 
     def update(self):
         # 적 Hp에 변화가 생겼다면
         if self.enemyPrevHp is not self.enemy.hp:
-            hpGuageBarWidth = int(self.lerp(self.originalHpGuageBarImage.get_rect().width, 0, 1.0 - self.enemy.hp / self.enemyMaxHp))
-            self.hpGuageBar.image = pygame.transform.scale(self.originalHpGuageBarImage, (hpGuageBarWidth, self.originalHpGuageBarImage.get_rect().height))
-            self.hpGuageBar.x = self.originalHpGuageBarX - (self.originalHpGuageBarImage.get_rect().width - self.hpGuageBar.image.get_rect().width) / 2
+            if self.enemy.hp >= 105:
+                hpGuageBarWidth = int(self.lerp(self.originalHpGuageBar3Image.get_rect().width, 0, 1.0 - (self.enemy.hp - 105) / 75))
+                self.hpGuageBar3.image = pygame.transform.scale(self.originalHpGuageBar3Image, (hpGuageBarWidth, self.originalHpGuageBar3Image.get_rect().height))
+                self.hpGuageBar3.x = self.originalHpGuageBarX - (self.originalHpGuageBar3Image.get_rect().width - self.hpGuageBar3.image.get_rect().width) / 2
+            elif self.enemy.hp >= 30:
+                hpGuageBarWidth = int(self.lerp(self.originalHpGuageBar2Image.get_rect().width, 0, 1.0 - (self.enemy.hp - 30) / 75))
+                self.hpGuageBar2.image = pygame.transform.scale(self.originalHpGuageBar2Image, (hpGuageBarWidth, self.originalHpGuageBar2Image.get_rect().height))
+                self.hpGuageBar2.x = self.originalHpGuageBarX - (self.originalHpGuageBar2Image.get_rect().width - self.hpGuageBar2.image.get_rect().width) / 2
+            else:
+                hpGuageBarWidth = int(self.lerp(self.originalHpGuageBarImage.get_rect().width, 0, 1.0 - self.enemy.hp / 30))
+                self.hpGuageBar.image = pygame.transform.scale(self.originalHpGuageBarImage, (hpGuageBarWidth, self.originalHpGuageBarImage.get_rect().height))
+                self.hpGuageBar.x = self.originalHpGuageBarX - (self.originalHpGuageBarImage.get_rect().width - self.hpGuageBar.image.get_rect().width) / 2
             self.enemyPrevHp = self.enemy.hp
 
     def lerp(self, fromValue, toValue, t):
@@ -295,10 +317,6 @@ class StageTwoBossEnemy(Enemy):
         self.shootAngle3 += self.shootAngleRate / 1.5
 
 class StageThreeBossEnemy(Enemy):
-    shootAngle2 = 0.0
-    shootAngleRate2 = 0.0
-    shootCount = 0.0
-
     def __init__(self, spriteGroup, x, y):
         super().__init__(spriteGroup, 100, 0, x, y, "assets/images/boss02.png", "assets/images/boss_bullet.png")
         self.image = pygame.transform.scale(self.image, (140, 100))
@@ -309,6 +327,7 @@ class StageThreeBossEnemy(Enemy):
         self.shootAngleRate = 10.0
         self.shootAngleRate2 = -10.0
         self.shootInterval = 0.025
+        self.lastTime2 = pygame.time.get_ticks()
         self.hp = 180 # 이 보스는 체력이 3단계로 이루어져 있음. 190 + 190 + 120.
         self.shootCount = 4
         self.bossEnemyHpBar = StageThreeBossEnemyHpBar(spriteGroup, self)
@@ -318,6 +337,10 @@ class StageThreeBossEnemy(Enemy):
 
         if self.y < 130:
             self.y += 1.0
+        else:
+            currentTime = pygame.time.get_ticks()
+            currentTime - self.lastTime2
+            self.lastTime2 = currentTime;
 
         if self.bossEnemyHpBar is not None:
             self.bossEnemyHpBar.update()
