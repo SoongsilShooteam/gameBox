@@ -296,6 +296,14 @@ class StageTwoBossEnemy(Enemy):
 
         if self.y < 130:
             self.y += 1.0
+        elif self.bossEnemyHpBar.enemyMaxHp / 2 > self.hp:
+            currentTime = pygame.time.get_ticks()
+            if currentTime - self.lastTime2 > 1500:
+                v1 = Vector2(self.x, self.y)
+                v2 = Vector2(self.player.x, self.player.y)
+                self.shootAngle = v1.angle(v2) * 180.0 / PI
+                self.generateBullet(self.shootAngle, 0.0, self.shootSpeed, 0.0)
+                self.lastTime2 = currentTime
 
         if self.bossEnemyHpBar is not None:
             self.bossEnemyHpBar.update()
