@@ -180,6 +180,7 @@ class Enemy(Object):
         self.shootAngleRate = 0.0
         self.shootSpeed = 10.0
         self.shootSpeedRate = 0.0
+        self.colliderRange = 25.0
         self.shootInterval = 0.1 # N초마다 총알 쏘기
         self.sceneManager = sceneManager.SceneManager()
         self.gameLevel = self.sceneManager.gameLevel
@@ -239,6 +240,7 @@ class StageOneBossEnemy(Enemy):
         self.hp = 100
         self.lastTime2 = currentTime = pygame.time.get_ticks()
         self.bossEnemyHpBar = BossEnemyHpBar(spriteGroup, self)
+        self.colliderRange = 25.0
 
     def update(self):
         super().update()
@@ -277,7 +279,7 @@ class StageOneBossEnemy(Enemy):
 
 class StageTwoBossEnemy(Enemy):
     def __init__(self, spriteGroup, x, y):
-        super().__init__(spriteGroup, 100, 0, x, y, "assets/images/boss01.png", "assets/images/boss_bullet.png")
+        super().__init__(spriteGroup, 100, 0, x, y, "assets/images/boss03.png", "assets/images/boss_bullet.png")
         self.image = pygame.transform.scale(self.image, (140, 100))
         self.lastTime2 = currentTime = pygame.time.get_ticks()
         self.shootAngle2 = 0.0
@@ -287,6 +289,7 @@ class StageTwoBossEnemy(Enemy):
         self.hp = 100
         self.shootCount = 4
         self.bossEnemyHpBar = BossEnemyHpBar(spriteGroup, self)
+        self.colliderRange = 25.0
 
     def update(self):
         super().update()
@@ -331,6 +334,7 @@ class StageThreeBossEnemy(Enemy):
         self.hp = 180 # 이 보스는 체력이 3단계로 이루어져 있음. 190 + 190 + 120.
         self.shootCount = 4
         self.bossEnemyHpBar = StageThreeBossEnemyHpBar(spriteGroup, self)
+        self.colliderRange = 25.0
 
     def update(self):
         super().update()

@@ -117,6 +117,6 @@ class PlayerBullet(Object):
         for enemy in self.sceneManager.getEnemyList():
             v1 = Vector2(enemy.x, enemy.y)
             v2 = Vector2(self.x, self.y)
-            if v1.distance(v2) < 25.0:
+            if v1.distance(v2) < enemy.colliderRange:
                 self.kill()
                 enemy.onHitPlayerBullet()
