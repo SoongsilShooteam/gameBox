@@ -12,7 +12,7 @@ print(os.getcwd())
 
 class Item(Object):
     def __init__(self, x, y, spriteGroup, player, use = True) :
-        super().__init__(x, y, "assets/images/player.png")
+        super().__init__(x, y, "assets/images/item.png")
         self.spriteGroup = spriteGroup
         self.sceneManager = sceneManager.SceneManager()
         self.player = player
