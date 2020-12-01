@@ -37,4 +37,4 @@ class GameOverScene():
     def render(self):
         self.screen.blit(self.image, self.rect)
 
-        self.sceneManager.finalScore(self.screen, self.sceneManager.score, 30, self.x / 3, self.y / 1.5)
+        self.sceneManager.finalScore(self.screen, self.sceneManager.score, 30, self.x, self.y / 1.5)

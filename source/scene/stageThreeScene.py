@@ -235,7 +235,6 @@ class StageThreeScene():
 
     def stageClear(self):
         self.stageClearYn = True
-
         self.sceneManager.score += 200
 
         for enemy in self.enemyList:
@@ -246,6 +245,7 @@ class StageThreeScene():
 
     def render(self):
         self.allSprites.draw(self.screen)
+        self.sceneManager.viewScore(self.screen, self.sceneManager.score, 30, self.screenX, 30)
 
         if self.stageClearYn is True:
             self.gameClear.render(self.screen)

@@ -145,7 +145,6 @@ class StageTwoScene():
 
     def stageClear(self):
         self.stageClearYn = True
-
         self.sceneManager.score += 200
 
         for enemy in self.enemyList:
@@ -156,8 +155,7 @@ class StageTwoScene():
 
     def render(self):
         self.allSprites.draw(self.screen)
-
-        self.sceneManager.viewScore(self.screen, self.sceneManager.score, 30, self.screenX / 3, 10)
+        self.sceneManager.viewScore(self.screen, self.sceneManager.score, 30, self.screenX, 30)
 
         if self.stageClearYn is True:
             self.player.x = self.screen.get_width() / 2

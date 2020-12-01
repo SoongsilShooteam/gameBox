@@ -1,4 +1,4 @@
-from source.scene import stageOneScene, sceneManager, optionsScene
+from source.scene import stageOneScene, stageTwoScene,stageThreeScene, sceneManager, optionsScene
 from pygame import mixer as Mixer
 from source.object.object import Object
 import pygame
