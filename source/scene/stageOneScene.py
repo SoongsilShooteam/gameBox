@@ -140,7 +140,7 @@ class StageOneScene():
 
     def render(self):
         self.allSprites.draw(self.screen)  # allSprites의 등록된 모든 객체를 화면에 그림.
-        self.sceneManager.viewScore(self.screen, self.sceneManager.score, 30, self.screenX / 3, 10)
+        self.sceneManager.viewScore(self.screen, self.sceneManager.score, 30, self.screenX, 30)
 
         if self.stageClearYn is True :
             self.player.x = self.screen.get_width() / 2

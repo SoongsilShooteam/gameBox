@@ -54,13 +54,15 @@ class SceneManager:
         return self.currentScene.enemyList
 
     def viewScore(self, screen, text, size, x, y):
+        self.screen = screen
         self.font = pygame.font.Font("assets/fonts/DOSMyungjo.ttf", size)
         self.text = self.font.render("Score: " + str(text), True, (255, 255, 255))
-        self.screen = screen
-        self.screen.blit(self.text, (x, y))
+        self.text_rect = self.text.get_rect(center=(x / 2, y))
+        self.screen.blit(self.text, self.text_rect)
 
     def finalScore(self, screen, text, size, x, y):
         self.font = pygame.font.Font("assets/fonts/DOSMyungjo.ttf", size)
         self.text = self.font.render("Your Score: " + str(text), True, (255, 255, 255))
+        self.text_rect = self.text.get_rect(center=(x / 2, y))
         self.screen = screen
-        self.screen.blit(self.text, (x, y))
+        self.screen.blit(self.text, self.text_rect)
