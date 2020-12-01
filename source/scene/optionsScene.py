@@ -15,11 +15,6 @@ class OptionsScene():
         self.player = None
         self.screenX, self.screenY = pygame.display.get_surface().get_size()
         self.sceneManager = sceneManager.SceneManager()
-        # self.buttonImage = 'assets/images/b.png'
-        # self.menu = (Object(0, 0, self.buttonImage))
-        #self.menu.x = 0.5 * self.screenX
-        #self.menu.y = 0.55 * self.screenY + 150
-       #self.menu.update()
         self.buttonImage1 = "assets/images/buttonOptionsEasy.png"
         self.buttonImage2 = "assets/images/buttonOptionsNormal.png"
         self.buttonImage3 = "assets/images/buttonOptionsHard.png"
@@ -28,7 +23,6 @@ class OptionsScene():
         self.menu = ["Easy", "Normal", "Hard", "Quit"]
 
         self.selectOption = (Object(0,0, self.selectOptionImage))
-        #self.selectOption = pygame.transform.scale(pygame.image.load(self.img), (480, 200))
 
         for i in range(4):
             if i == 0:
@@ -104,22 +98,10 @@ class OptionsScene():
             self.menu[i].y = 0.35 * self.screenY + i * 110
             self.menu[i].update()
 
-           #if 173 < self.mousePos[0] < 307 and 580 < self.mousePos[1] < 640 and click[0] == 1:
-
-
-        # if 173 < self.mousePos[0] < 307 and 555 < self.mousePos[1] < 625:
-        #     self.menu = (Object(0, 0, 'assets/images/buttonBackHover.png'))
-        # else:
-        #     self.menu = (Object(0, 0, self.buttonImage))
-        #self.menu.x = 0.5 * self.screenX
-        #self.menu.y = 0.55 * self.screenY + 150
-        #self.menu.update()
-
-
     def render(self):
         self.screen.fill((0, 0, 0))
         self.screen.blit(self.image, self.rect)
         self.selectOption.render(self.screen)
-        # self.menu.render(self.screen)
+
         for i in range(4):
             self.menu[i].render(self.screen)

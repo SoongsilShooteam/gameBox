@@ -93,7 +93,6 @@ class StageTwoScene():
 
     def addScore(self):
         self.sceneManager.score += 50
-        print(self.sceneManager.score)
 
     def update(self):
         self.allSprites.update()
@@ -132,7 +131,6 @@ class StageTwoScene():
         self.stageClearYn = True
 
         self.sceneManager.score += 200
-        print(self.sceneManager.score)
 
         for enemy in self.enemyList:
             enemy.kill()

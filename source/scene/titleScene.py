@@ -24,6 +24,7 @@ class TitleScene:
         self.buttonImage2 = "assets/images/buttonOptions.png"
         self.buttonImage3 = "assets/images/buttonQuit.png"
         self.menu = ["Play", "HowToPlay", "Quit"]
+
         for i in range(3):
             if i == 0:
                 self.menu[i] = (Object(0, 0, self.buttonImage1))

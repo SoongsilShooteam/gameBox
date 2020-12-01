@@ -34,10 +34,8 @@ class SceneManager:
 
     def render(self):
         self.currentScene.render()
-        #screen.blit(self.image, self.rect)
 
     def setScene(self, scene):
-        #self.screen.fill((0, 0, 0))
         self.nextScene = scene
 
     def addEnemy(self, enemy):

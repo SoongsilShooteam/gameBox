@@ -101,7 +101,6 @@ class StageOneScene():
 
     def addScore(self):
         self.sceneManager.score += 50
-        print(self.sceneManager.score)
 
     def update(self):
         self.allSprites.update()  # allSprites의 등록된 모든 객체를 업데이트
@@ -131,19 +130,18 @@ class StageOneScene():
     def stageClear(self):
         self.stageClearYn = True
         self.sceneManager.score += 200
-        print(self.sceneManager.score)
+        
         for enemy in self.enemyList:
             enemy.kill()
+
         self.enemyGenInfoList = []
         self.enemyList = []
         return True
 
     def render(self):
         self.allSprites.draw(self.screen)  # allSprites의 등록된 모든 객체를 화면에 그림.
-
         self.sceneManager.viewScore(self.screen, self.sceneManager.score, 30, self.screenX / 3, 10)
 
-        #if len(self.enemyGenInfoList) == 0 and len(self.enemyList) == 0:
         if self.stageClearYn is True :
             self.player.x = self.screen.get_width() / 2
             self.player.y -= 6
