@@ -25,6 +25,9 @@ class Player(Object):
         self.hp = 5
         self.playerHpBarList = []
 
+        self.leftBullet = False
+        self.rightBullet = False
+
         for i in range(self.hp) :
             self.playerHpBarList.append(PlayerHpBar(i*30+30, 770))
             self.spriteGroup.add(self.playerHpBarList[i])
@@ -38,6 +41,8 @@ class Player(Object):
     def update(self):
         super().update()
         key = pygame.key.get_pressed()
+
+        self.item = self.sceneManager.getItem()
 
         if key[pygame.K_LEFT]:
             if (self.x - self.speed) > 0:
@@ -62,6 +67,10 @@ class Player(Object):
                 self.gunSound.stop()
                 self.gunSound.play()
                 self.spriteGroup.add(PlayerBullet(self.x, self.y - 25))
+                if self.leftBullet is True :
+                    self.spriteGroup.add(PlayerBullet(self.x-17, self.y + 5))
+                if self.rightBullet is True :
+                    self.spriteGroup.add(PlayerBullet(self.x+17, self.y + 5))
                 self.lastTime = currentTime
 
     def onHitEnemyBullet(self):
@@ -73,10 +82,17 @@ class Player(Object):
         else:
             print(self.sceneManager.score)
         self.playerHpBarList[self.hp].kill()
+        self.playerHpBarList.pop()
         if self.hp == 0:
             self.kill()
             self.sceneManager.setScene(gameOverScene.GameOverScene(self.screen))
 
+    def plusHp(self):
+        self.hp += 2
+
+        for i in range(2) :
+            self.playerHpBarList.append(PlayerHpBar(self.playerHpBarList[-1].x + 30, 770))
+            self.spriteGroup.add(self.playerHpBarList[-1])
 
 class PlayerHpBar(Object) :
     def __init__(self, x, y):
