@@ -1,6 +1,7 @@
 from pygame import mixer as Mixer
 from source.object import enemy
 from source.object import player
+from source.object import item
 from source.object.object import Object
 from source.scene import sceneManager, stageThreeScene
 import pygame
@@ -30,6 +31,7 @@ class StageTwoScene():
         self.stageClearYn = False
         self.gameLevel = gameLevel
         self.sceneManager = sceneManager.SceneManager()
+        self.lastTime = 1600.0
 
         # 일반 적이 출현하는 정보를 적어놓는 리스트
         # Tuple 값 해석
@@ -72,6 +74,7 @@ class StageTwoScene():
         self.initializeBackground()
         self.initializeBGM()
         self.initializePlayer()
+        self.initializeItem()
 
     def initializeBackground(self):
         self.allSprites.add(BackgroundSprite())
@@ -83,6 +86,17 @@ class StageTwoScene():
 
     def initializePlayer(self):
         self.player = player.Player(self.screen, self.allSprites)  # 플레이어 객체 생성
+
+    def initializeItem(self):
+        self.item = item.Item(0, 0, self.allSprites, self.player, False)
+
+    def addItem(self):
+        currentTime = pygame.time.get_ticks()
+
+        if (currentTime - self.lastTime) / 1000.0 >= 24.0:
+            self.item = item.Item(0, 0, self.allSprites, self.player, True)
+            self.lastTime = currentTime
+
 
     def addEnemy(self, enemy):
         self.enemyList.append(enemy)
@@ -96,6 +110,8 @@ class StageTwoScene():
 
     def update(self):
         self.allSprites.update()
+
+        self.addItem()
 
         stageElapsedTime = (pygame.time.get_ticks() - self.stageStartTime) / 1000.0
 

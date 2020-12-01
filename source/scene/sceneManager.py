@@ -53,6 +53,9 @@ class SceneManager:
     def getEnemyList(self):
         return self.currentScene.enemyList
 
+    def getItem(self):
+        return self.currentScene.item
+
     def viewScore(self, screen, text, size, x, y):
         self.font = pygame.font.Font("assets/fonts/DOSMyungjo.ttf", size)
         self.text = self.font.render("Score: " + str(text), True, (255, 255, 255))

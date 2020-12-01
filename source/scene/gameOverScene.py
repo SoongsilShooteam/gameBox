@@ -12,7 +12,7 @@ class GameOverScene():
         self.rect = self.image.get_rect()
         self.x = self.image.get_width()
         self.y = self.image.get_height()
-        self.player = None
+
         self.sceneManager = sceneManager.SceneManager()
 
         Mixer.init()

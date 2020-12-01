@@ -2,6 +2,7 @@ from pygame import mixer as Mixer
 from source.scene import stageTwoScene, sceneManager
 from source.object import enemy
 from source.object import player
+from source.object import item
 from source.object.object import Object
 import pygame
 import random
@@ -30,7 +31,7 @@ class StageOneScene():
         self.stageClearYn = False
         self.gameLevel = gameLevel
         self.sceneManager = sceneManager.SceneManager()
-
+        self.lastTime = 1600.0
         # 일반 적이 출현하는 정보를 적어놓는 리스트
         # Tuple 값 해석
         # 튜플 요소 0번째: 적이 출현하는 시간대 (초 단위)
@@ -80,6 +81,7 @@ class StageOneScene():
         self.initializeBackground()
         self.initializeBGM()
         self.initializePlayer()
+        self.initializeItem()
 
     def initializeBackground(self):
         self.allSprites.add(BackgroundSprite())
@@ -91,6 +93,18 @@ class StageOneScene():
 
     def initializePlayer(self):
         self.player = player.Player(self.screen, self.allSprites)  # 플레이어 객체 생성
+
+    def initializeItem(self):
+        self.item = item.Item(0, 0, self.allSprites, self.player, False)
+
+    def addItem(self):
+        currentTime = pygame.time.get_ticks()
+        print(currentTime, "\n", self.lastTime)
+
+        if (currentTime - self.lastTime) / 1000.0 >= 27.0:
+            self.item = item.Item(0, 0, self.allSprites, self.player, True)
+            self.lastTime = currentTime
+        currentTime = pygame.time.get_ticks()
 
     def addEnemy(self, enemy):
         self.enemyList.append(enemy)
@@ -105,6 +119,8 @@ class StageOneScene():
     def update(self):
         self.allSprites.update()  # allSprites의 등록된 모든 객체를 업데이트
 
+        self.addItem()
+
         stageElapsedTime = (pygame.time.get_ticks() - self.stageStartTime) / 1000.0
 
         while len(self.enemyGenInfoList) is not 0:
@@ -114,6 +130,7 @@ class StageOneScene():
                 del self.enemyGenInfoList[0]
             else:
                 break
+
 
     def generateEnemyByInfo(self, enemyGenInfo):
         (x, y) = enemyGenInfo[2], enemyGenInfo[3]
